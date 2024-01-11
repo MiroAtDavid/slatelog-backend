@@ -1,0 +1,80 @@
+package com.slatelog.slatelog.domain.event;
+
+import com.slatelog.slatelog.domain.BaseEntity;
+import com.slatelog.slatelog.domain.address.Address;
+import com.slatelog.slatelog.domain.media.Media;
+import jakarta.annotation.Nullable;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.mongodb.core.index.Indexed;
+
+import java.time.Duration;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import static com.slatelog.slatelog.foundation.AssertUtil.*;
+import static com.slatelog.slatelog.foundation.EntityUtil.generateUUIDv4;
+
+/**
+ * Represents an event with associated details such as title, description, poll, and location.
+ */
+@Getter
+@Setter
+public class Event extends BaseEntity<String> {
+
+
+    @Indexed
+    private String userId;
+    private String title;
+    private @Nullable String description;
+    private Poll poll;
+    private @Nullable Address location;             // TODO Besides the Address, how do we deal with the Apps locations ???? @DrWenz
+    private @Nullable Set<Invitation> invitations;    // TODO Not sure how to deal with this, do we need a List<EmailDTO> ???? @DrWenz
+    private @Nullable List<Media> medias;
+    private Set<Like> likes;
+    public static final Duration EMAIL_VERIFICATION_DURATION = Duration.ofHours(24);
+
+
+
+
+    /**
+     * Default constructor for Spring Data.
+     *
+     * @param id The unique identifier for the Event.
+     */    protected Event(String id) {
+        super(id);
+    }
+
+    /**
+     * Constructor for creating a new Event.
+     *
+     * @param userId      The user ID to whom the Event belongs.
+     * @param title       The title of the Event.
+     * @param description The optional description of the Event.
+     * @param poll        The poll associated with the Event.
+     * @param location    The optional location of the Event.
+     * @param invitations  Invitations for the Event.
+     * @param medias      Optional media associated with the Event.
+     */
+    public Event (String userId, String title, @Nullable String description, Poll poll, @Nullable Address location, Set<Invitation> invitations, @Nullable List<Media> medias) {
+        super(generateUUIDv4());
+
+        isTrue(title != null || medias != null, "text or medias must not be null");
+        this.userId = isNotNull(userId, "userId");
+        this.title = isNotNull(title, "title");
+        this.description = hasMaxTextOrNull(description, 4096, "desctiption");
+        this.poll = isNotNull(poll, "poll");
+        this.location = location;
+        this.medias = hasMaxSizeOrNull(medias, 10, "medias");
+        this.likes = new HashSet<>();
+        this.invitations = invitations;
+
+
+    }
+
+
+
+
+
+}
