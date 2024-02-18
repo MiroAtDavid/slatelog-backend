@@ -2,25 +2,27 @@ package com.slatelog.slatelog.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.slatelog.slatelog.domain.BaseEntity;
-import com.slatelog.slatelog.security.PasswordService.EncodedPassword;
+import com.slatelog.slatelog.security.password.PasswordService.EncodedPassword;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.List;
 
 import static com.slatelog.slatelog.foundation.AssertUtil.isValidEmail;
 import static com.slatelog.slatelog.foundation.EntityUtil.generateUUIDv4;
 
 @Getter
-@Setter
+@ToString
 @Document(collection = "user")
 public class User extends BaseEntity<String> {
 
     @Indexed(unique = true)
     private String email;
     private String password;
-    private Role role;
+    private List<Role> role;
     private Profile profile;
     private Social social;
     private Account account;
@@ -37,7 +39,7 @@ public class User extends BaseEntity<String> {
 
         this.email = isValidEmail(email, "email");
         this.password = password.getEncodedPassword();
-        this.role = role;
+        this.role = List.of(role);
         this.profile = profile;
         this.social = new Social();
         this.account = new Account();

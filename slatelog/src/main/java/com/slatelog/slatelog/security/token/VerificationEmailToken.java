@@ -1,7 +1,8 @@
 package com.slatelog.slatelog.security.token;
 
-import lombok.Getter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.annotation.Transient;
 
 import java.time.Instant;
@@ -54,6 +55,13 @@ public class VerificationEmailToken extends Token {
 
     // TODO Strings are bad for security. Will be explain later.
     @Transient private String verificationEmailToken;
+
+    @PersistenceCreator
+    public VerificationEmailToken(
+            String verificationEmail, String encodedValue, Instant createdAt, Instant expiresAt) {
+        super(encodedValue, createdAt, expiresAt);
+        this.verificationEmail = verificationEmail;
+    }
 
     // Static factory method
     public static VerificationEmailToken generateEmailToken(String email, Instant expiresAt) {

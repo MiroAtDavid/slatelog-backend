@@ -1,4 +1,4 @@
-package com.slatelog.slatelog.security;
+package com.slatelog.slatelog.security.password;
 
 import com.nulabinc.zxcvbn.Strength;
 import com.nulabinc.zxcvbn.Zxcvbn;

@@ -35,7 +35,7 @@ public class EventFixture {
     public static final Instant INST2 = INSTANT_KEY2.truncatedTo(ChronoUnit.MINUTES);
     public static final Set<Invitation> INVITATIONS = new HashSet<>();
 
-    public static Event createEvent(){
+    public static Event createEvent() {
 
         // Creates Event-organiser
         var user = UserFixture.createUser();
@@ -73,8 +73,8 @@ public class EventFixture {
         var poll = new Poll(POLLMAP);
 
         // Event Inivitations
-        INVITATION = new Invitation(user.getEmail(), user.getAccount().generateEmailTokenForMe(user.getEmail()));
-        INVITATION2 = new Invitation(EMAIL, user.getAccount().generateEmailTokenForMe(EMAIL));
+        INVITATION = new Invitation(user.getEmail());
+        INVITATION2 = new Invitation(EMAIL);
         INVITATIONS.add(INVITATION);
         INVITATIONS.add(INVITATION2);
 

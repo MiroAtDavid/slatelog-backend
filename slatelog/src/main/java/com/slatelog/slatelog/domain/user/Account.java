@@ -1,6 +1,5 @@
 package com.slatelog.slatelog.domain.user;
 
-import com.slatelog.slatelog.security.token.Token;
 import com.slatelog.slatelog.security.token.VerificationEmailToken;
 import lombok.Getter;
 import lombok.Setter;
@@ -58,16 +57,6 @@ public class Account {
         this.emailToken = token;
     }
 
-    public Token generateEmailTokenForMe(String email) {
-        isNotNull(email, "email");
-
-        // var token = generateEmailToken(email, now().plus(24, ChronoUnit.DAYS));
-        var token = generateEmailToken(email, now().plus(EMAIL_VERIFICATION_DURATION));
-
-        // Save the token in the account for later verification.
-        return this.emailToken = token;
-    }
-
     /**
      * Verify the email token for the given tokenId.
      *
@@ -79,7 +68,7 @@ public class Account {
         isNotNull(tokenId, "tokenId");
         isNotNull(emailToken, "token");
 
-        // Verify the token by checking if it is not ehttps://www.youtube.com/watch?v=iUXRONfpqrUxpired and if the hashes match.
+        // Verify the token by checking if it is not expired and if the hashes match.
         // If verification fails, an IllegalArgumentException is thrown.
         // TODO We need our own exception type here. e.g. (TokenVerificationException)
         verifyToken(emailToken, tokenId);
@@ -120,6 +109,7 @@ public class Account {
         return emailToken.getVerificationEmailToken();
     }
 }
+
 
 // @Getter
 // public class Account {

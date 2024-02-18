@@ -1,17 +1,18 @@
 package com.slatelog.slatelog.presentation;
 
 
-import static com.slatelog.slatelog.presentation.commands.Commands.UserVerificationCommand;
-
 import com.slatelog.slatelog.domain.user.User;
 import com.slatelog.slatelog.presentation.commands.Commands.UserRegistrationCommand;
 import com.slatelog.slatelog.service.UserRegistrationService;
-import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+
+import static com.slatelog.slatelog.presentation.commands.Commands.UserVerificationCommand;
 
 // Purpose of this class?
 // --------------------------------------------------------------------------------------------

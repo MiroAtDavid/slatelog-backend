@@ -11,9 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.context.annotation.Import;
 
+import java.util.Optional;
+
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 
 
 
@@ -61,7 +62,7 @@ public class EventRepositoryTest {
         assertThat(eventSaved.getVersion(), equalTo(0L));
     }
 
-/*    @Test
+    @Test
     public void findById_shouldReturnEvent_whenEventExists() {
         // Given
         // @BeforeEach
@@ -72,5 +73,18 @@ public class EventRepositoryTest {
         // Then
         assertThat(eventFound.isPresent(), is(true));
         assertThat(eventFound.get().getId(), equalTo(eventSaved.getId()));
-   }*/
+   }
+
+    @Test
+    public void findByTitle_shouldReturnEvent_whenEventExists() {
+        // Given
+        // @BeforeEach
+
+        // When
+        Optional<Event> userFound = eventRepository.findByTitle(eventSaved.getTitle());
+
+        // Then
+        assertThat(userFound.isPresent(), is(true));
+        assertThat(userFound.get().getTitle(), equalTo(eventSaved.getTitle()));
+    }
 }

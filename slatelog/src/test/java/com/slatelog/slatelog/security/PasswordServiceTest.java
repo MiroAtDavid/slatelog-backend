@@ -1,7 +1,9 @@
 package com.slatelog.slatelog.security;
 
 
-import com.slatelog.slatelog.security.PasswordService.EncodedPassword;
+import com.slatelog.slatelog.security.password.PasswordEncoderConfig;
+import com.slatelog.slatelog.security.password.PasswordService;
+import com.slatelog.slatelog.security.password.PasswordService.EncodedPassword;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -61,7 +63,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 // @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(classes = {PasswordService.class})
-@Import(SecurityConfig.class)
+@Import(PasswordEncoderConfig.class)
 public class PasswordServiceTest {
     // Test Fixtures
     public static final String STRONG_PASSWORD = "alle meine 99 java entchen lieben C#";

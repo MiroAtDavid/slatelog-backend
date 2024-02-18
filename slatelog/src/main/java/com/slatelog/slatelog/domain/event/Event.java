@@ -1,11 +1,13 @@
 package com.slatelog.slatelog.domain.event;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.slatelog.slatelog.domain.BaseEntity;
 import com.slatelog.slatelog.domain.address.Address;
 import com.slatelog.slatelog.domain.media.Media;
 import jakarta.annotation.Nullable;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -44,6 +46,8 @@ public class Event extends BaseEntity<String> {
      *
      * @param id The unique identifier for the Event.
      */
+    @PersistenceCreator
+    @JsonCreator
     protected Event(String id) {
         super(id);
     }

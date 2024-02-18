@@ -3,8 +3,8 @@ package com.slatelog.slatelog.fixture;
 import com.slatelog.slatelog.domain.user.Profile;
 import com.slatelog.slatelog.domain.user.Role;
 import com.slatelog.slatelog.domain.user.User;
-import com.slatelog.slatelog.security.PasswordService;
-import com.slatelog.slatelog.security.PasswordService.EncodedPassword;
+import com.slatelog.slatelog.security.password.PasswordService;
+import com.slatelog.slatelog.security.password.PasswordService.EncodedPassword;
 import static org.springframework.security.crypto.factory.PasswordEncoderFactories.createDelegatingPasswordEncoder;
 
 public class UserFixture {

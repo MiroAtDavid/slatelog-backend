@@ -31,7 +31,7 @@ public class JavaEMailSenderImpl implements EMailSender {
     private final Logger LOGGER = LoggerFactory.getLogger(JavaEMailSenderImpl.class);
 
     // Suppressing IntelliJ inspection warning; this is a false positive.
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+    @SuppressWarnings({"SpringJavaInjectionPointsAutowiringInspection", "SpringJavaInjectionPointsAutowiringInspection"})
     private final JavaMailSender mailSender;
 
     @Override
