@@ -11,7 +11,7 @@ import java.util.*;
 public class EventFixture {
 
 
-    public static final String TITLE = "Test Meeting";
+    public static final String TITLE = "Meeting";
     public static final String DESCRIPTION = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum";
     public static final VoteOption VOTE_OPTION_1 = VoteOption.Yes;
     public static final VoteOption VOTE_OPTION_2 = VoteOption.No;

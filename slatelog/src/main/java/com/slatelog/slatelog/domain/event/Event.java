@@ -6,7 +6,9 @@ import com.slatelog.slatelog.domain.media.Media;
 import jakarta.annotation.Nullable;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Duration;
 import java.util.HashSet;
@@ -21,34 +23,33 @@ import static com.slatelog.slatelog.foundation.EntityUtil.generateUUIDv4;
  */
 @Getter
 @Setter
+@Document("event")
+@TypeAlias("event") // Mongodb check
+// underscore class check
 public class Event extends BaseEntity<String> {
 
-
-    @Indexed
+    @Indexed(unique = true)
     private String userId;
     private String title;
     private @Nullable String description;
     private Poll poll;
-    private @Nullable Address location;             // TODO Besides the Address, how do we deal with the Apps locations ???? @DrWenz
-    private @Nullable Set<Invitation> invitations;    // TODO Not sure how to deal with this, do we need a List<EmailDTO> ???? @DrWenz
+    private @Nullable Address location;
+    private @Nullable Set<Invitation> invitations;
     private @Nullable List<Media> medias;
     private Set<Like> likes;
     public static final Duration EMAIL_VERIFICATION_DURATION = Duration.ofHours(24);
-
-
-
 
     /**
      * Default constructor for Spring Data.
      *
      * @param id The unique identifier for the Event.
-     */    protected Event(String id) {
+     */
+    protected Event(String id) {
         super(id);
     }
 
     /**
      * Constructor for creating a new Event.
-     *
      * @param userId      The user ID to whom the Event belongs.
      * @param title       The title of the Event.
      * @param description The optional description of the Event.
@@ -69,12 +70,5 @@ public class Event extends BaseEntity<String> {
         this.medias = hasMaxSizeOrNull(medias, 10, "medias");
         this.likes = new HashSet<>();
         this.invitations = invitations;
-
-
     }
-
-
-
-
-
 }

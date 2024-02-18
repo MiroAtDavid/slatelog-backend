@@ -1,5 +1,6 @@
 package com.slatelog.slatelog.persistence;
 
+
 import com.slatelog.slatelog.config.MongoConfig;
 import com.slatelog.slatelog.domain.event.Event;
 import com.slatelog.slatelog.fixture.EventFixture;
@@ -11,7 +12,11 @@ import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.context.annotation.Import;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
+
+
+
 
 @DataMongoTest
 @Import(MongoConfig.class)
@@ -31,7 +36,41 @@ public class EventRepositoryTest {
 
     @Test
     public void saveEvent_shouldReturnSavedEvent() {
-        // Bruh
+        // Given
+        // @BeforeEach
+
+        // When
+        // @BeforeEach
+
+        // Then
         assertThat(eventSaved, notNullValue());
     }
+
+    @Test
+    public void saveEvent_shouldSetAuditFields() {
+        // Given
+        // @BeforeEach
+
+        // When
+        // @BeforeEach
+
+        // Then
+        assertThat(eventSaved.getCreatedAt(), notNullValue());
+        assertThat(eventSaved.getLastModifiedAt(), notNullValue());
+        assertThat(eventSaved.getVersion(), notNullValue());
+        assertThat(eventSaved.getVersion(), equalTo(0L));
+    }
+
+/*    @Test
+    public void findById_shouldReturnEvent_whenEventExists() {
+        // Given
+        // @BeforeEach
+
+        // When
+        Optional<Event> eventFound = eventRepository.findById(eventSaved.getId());
+
+        // Then
+        assertThat(eventFound.isPresent(), is(true));
+        assertThat(eventFound.get().getId(), equalTo(eventSaved.getId()));
+   }*/
 }

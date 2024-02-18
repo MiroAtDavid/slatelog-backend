@@ -10,7 +10,6 @@ public abstract class AssertUtil {
     // https://stackoverflow.com/questions/201323/how-can-i-validate-an-email-address-using-a-regular-expression
     // A simple email pattern that is not 100% correct but good enough for our use case.
     private static final String emailPattern = "^(.+)@(\\S+)$";
-
     private static final String isNotNullMsg = "%s must not be null";
     private static final String isNotEquals = "%s does not equal %s";
     private static final String isValidEmailMsg = "%s must be a valid email address";

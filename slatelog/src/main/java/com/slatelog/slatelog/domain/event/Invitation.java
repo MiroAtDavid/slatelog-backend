@@ -2,10 +2,13 @@ package com.slatelog.slatelog.domain.event;
 
 import com.slatelog.slatelog.security.token.Token;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
+// @Setter -  codereview
+// Dr. Wenz
+// setter setzen nur wenn ich sie brauche, recherche: set methoden antipattern zu einem richdomain model
+// alternative gute sprechende- namen methoden
+
 public class Invitation {
 
     // Email address associated with the invitation

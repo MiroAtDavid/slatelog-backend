@@ -26,7 +26,9 @@ public class Comment extends BaseEntity<String> {
      * Indexing provides faster access to data.
      * See: https://stackoverflow.com/questions/1108/how-does-database-indexing-work
      */
-    @Indexed private String eventId;
+    @Indexed(unique = true)
+    private String eventId;
+    @Indexed (unique = true)
     private String userId;
     private String text;
     private Set<Like> likes;
