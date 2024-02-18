@@ -34,15 +34,15 @@ public class EmailService {
     // private final LoggerMailSenderImpl mailSender;
 
     // The protocol of the server where the application is running.
-    @Value("${app.public.protocol:http}")
+    @Value("http")
     private String protocol;
 
     // The domain name of the server where the application is running.
-    @Value("${app.public.domain:localhost}")
+    @Value("localhost")
     private String domain;
 
     // The port of the server where the application is running.
-    @Value("${app.public.port:8080}")
+    @Value("8080")
     private String port;
 
     // The verification link that is sent to the user which he has to click to verify his email.

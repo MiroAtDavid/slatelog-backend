@@ -81,12 +81,8 @@ public class UserRepositoryTest {
     @Test
     // public void ensure_saveUser_works()
     public void saveUser_shouldReturnSavedUser() {
-        // GWT / AAA
-
         // Given (Arrange)
-        // var profile = new Profile("Rene", "Wenz");
-        // var user = new User("wenz@spengergasse.at", "password", USER, profile);
-
+        // @BeforeEach
         // When (Act)
         // var userSaved = userRepository.save(user);
 
@@ -97,8 +93,7 @@ public class UserRepositoryTest {
     @Test
     public void saveUser_shouldSetAuditFields() {
         // Given
-        // var profile = new Profile("Rene", "Wenz");
-        // var user = new User("wenz@spengergasse.at", "password", USER, profile);
+        // @BeforeEach
 
         // When
         // var userSaved = userRepository.save(user);
@@ -124,8 +119,6 @@ public class UserRepositoryTest {
     @Test
     public void findByEmail_shouldReturnUser_whenUserExists() {
         // Given
-        // var profile = new Profile("Rene", "Wenz");
-        // var user = new User("wenz@spengergasse.at", "password", USER, profile);
         // var userSaved = userRepository.save(user);
 
         // When
@@ -139,8 +132,6 @@ public class UserRepositoryTest {
     @Test
     public void saveUser_shouldFail_withDuplicateEmail() {
         // Given
-        // var profile = new Profile("Rene", "Wenz");
-        // var duplicatedUser = new User(MAIL, "password", USER, profile);
         var duplicatedUser = UserFixture.createUser();
 
         // When / Then
