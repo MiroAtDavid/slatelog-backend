@@ -19,9 +19,9 @@ public class Answer {
     /**
      * Creates an answer to a poll.
      *
-     * @param voterEmail      The email address of the voter.
-     * @param votedAt    The timestamp of the vote.
-     * @param voteOption The selected voting option (YES, NO, MAYBE).
+     * @param voterEmail        The email address of the voter.
+     * @param votedAt           The timestamp of the vote.
+     * @param voteOption        The selected voting option (YES, NO, MAYBE).
      */
     public Answer(String voterEmail, Instant votedAt, VoteOption voteOption) {
         this.voterEmail = isValidEmail(voterEmail, "emailEmail");

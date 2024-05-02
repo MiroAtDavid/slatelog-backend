@@ -8,7 +8,7 @@ import com.slatelog.slatelog.security.password.PasswordService.EncodedPassword;
 import static org.springframework.security.crypto.factory.PasswordEncoderFactories.createDelegatingPasswordEncoder;
 
 public class UserFixture {
-    public static final String EMAIL = "david@spengergasse.at";
+    public static final String EMAIL = "dav210957@spengergasse.at";
     public static final String PASSWORD = "spengergasse";
     public static final String FIRST_NAME = "Miro";
     public static final String LAST_NAME = "David";

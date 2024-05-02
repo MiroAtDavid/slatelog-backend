@@ -27,7 +27,9 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.jetbrains:annotations:24.0.0")
-    compileOnly("org.projectlombok:lombok")
+    implementation("org.projectlombok:lombok:1.18.28")
+	implementation("org.projectlombok:lombok:1.18.28")
+	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")
 
 	testCompileOnly("org.projectlombok:lombok")
@@ -47,6 +49,7 @@ dependencies {
 
 	// Crypto Bouncy Castle
 	implementation("org.bouncycastle:bcpkix-jdk15on:1.70")
+
 }
 
 tasks.withType<Test> {

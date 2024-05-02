@@ -1,0 +1,33 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+DTSTART:20240506T205800
+DTEND:20240506T215800
+SUMMARY:Meeting
+DESCRIPTION:Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum
+LOCATION:Austria, Wien 1050, Spengergasse 7
+ORGANIZER:dav210957@spengergasse.at
+ATTENDEE:dav210957@spengergasse.at
+ATTENDEE:wenz@spengergasse.at
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20240507T205800
+DTEND:20240507T215800
+SUMMARY:Meeting
+DESCRIPTION:Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum
+LOCATION:Austria, Wien 1050, Spengergasse 7
+ORGANIZER:dav210957@spengergasse.at
+ATTENDEE:dav210957@spengergasse.at
+ATTENDEE:wenz@spengergasse.at
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20240508T205800
+DTEND:20240508T215800
+SUMMARY:Meeting
+DESCRIPTION:Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum
+LOCATION:Austria, Wien 1050, Spengergasse 7
+ORGANIZER:dav210957@spengergasse.at
+ATTENDEE:dav210957@spengergasse.at
+ATTENDEE:wenz@spengergasse.at
+END:VEVENT
+END:VCALENDAR

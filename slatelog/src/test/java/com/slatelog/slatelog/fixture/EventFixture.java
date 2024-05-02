@@ -18,7 +18,7 @@ public class EventFixture {
     public static final VoteOption VOTE_OPTION_3 = VoteOption.Maybe;
     public static final String STREET = "Spengergasse 7";
     public static final String CITY = "Wien";
-    public static final String STATE = "Wien";
+    public static final String STATE = "Austria";
     public static final String ZIPCODE = "1050";
     public static HashMap<Instant, List<Answer>> POLLMAP = new HashMap<>();
     public static Invitation INVITATION;
@@ -78,8 +78,10 @@ public class EventFixture {
         INVITATIONS.add(INVITATION);
         INVITATIONS.add(INVITATION2);
 
+
         // Creating the Event Itself
         Event event = new Event(user.getId(), TITLE, DESCRIPTION, poll, location, INVITATIONS, null);
+
         return event;
     }
 }

@@ -15,15 +15,32 @@ public class Commands {
     // --- Verification ---
     public record UserVerificationCommand(String userId, String tokenId) {}
     ;
-    public record CreateEventCommand(
-            String title
-    ){}; // Coop Edren Datenübertragung
+    // Coop Edren Datenübertragung
+    // title, address, deadlineDate, daedlineTime, description, emails, dateTimes
+    public record CreateEventCommand (
+            String title,
+            String address,
+            String deadlineDate,
+            String deadlineTime,
+            String description,
+            String emails,
+            String dateTimes
+    ){};
 
-    public record UpdateEventCommand(
+
+    // Coop Edren Datenübertragung
+    // event id
+    public record UpdateEventCommand (
             String eventId,
-            String title
-    ){}; // Coop Edren Datenübertragung
-        // event id
+            String title,
+            String address,
+            String deadlineDate,
+            String deadlineTime,
+            String description,
+            String emails,
+            String dateTimes
+    ){};
+
 
 
 }
