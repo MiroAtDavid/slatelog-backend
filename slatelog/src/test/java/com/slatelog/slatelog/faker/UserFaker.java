@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package com.slatelog.slatelog.faker;
 
 import com.slatelog.slatelog.domain.user.Profile;
@@ -67,9 +66,3 @@ public class UserFaker {
         users.forEach(System.out::println);
     }
 }
-=======
-package com.slatelog.slatelog.faker;
-
-public class UserFaker {
-}
->>>>>>> 11a96e5 (invitaitonEmail(emailService))

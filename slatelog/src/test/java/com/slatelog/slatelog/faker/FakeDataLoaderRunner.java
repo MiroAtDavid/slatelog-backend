@@ -3,8 +3,8 @@ package com.slatelog.slatelog.faker;
 import com.slatelog.slatelog.SlatelogApplication;
 import org.springframework.boot.SpringApplication;
 
-public class FakerDataLoaderRunner {
-    private static final int FAKED_USERS = 3;
+public class FakeDataLoaderRunner {
+    private static final int FAKED_USERS = 30;
     private static final int FAKED_EVENTS = 10;
 
     public static void main(String[] args) {

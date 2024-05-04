@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package com.slatelog.slatelog.faker;
 
 import com.slatelog.slatelog.domain.event.Event;
@@ -30,7 +29,3 @@ public class SlatelogFaker {
         System.out.println(userListMap);
     }
 }
-=======
-package com.slatelog.slatelog.faker;public class SlatelogFaker {
-}
->>>>>>> 11a96e5 (invitaitonEmail(emailService))
