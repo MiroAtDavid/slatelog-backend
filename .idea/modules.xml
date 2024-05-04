@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/FX_Main_mit_og-backend.iml" filepath="$PROJECT_DIR$/.idea/FX_Main_mit_og-backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Backend.iml" filepath="$PROJECT_DIR$/.idea/Backend.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/slatelog.main.iml" filepath="$PROJECT_DIR$/.idea/modules/slatelog.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/slatelog.test.iml" filepath="$PROJECT_DIR$/.idea/modules/slatelog.test.iml" />
     </modules>
