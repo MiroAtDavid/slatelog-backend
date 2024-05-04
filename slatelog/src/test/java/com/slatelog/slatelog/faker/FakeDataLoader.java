@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.slatelog.slatelog.faker;
 
 import com.slatelog.slatelog.domain.event.Event;
@@ -39,3 +40,7 @@ public class FakeDataLoader {
         eventRepository.saveAll(allEvents);
     }
 }
+=======
+package com.slatelog.slatelog.faker;public class FakeDataLoader {
+}
+>>>>>>> 11a96e5 (invitaitonEmail(emailService))

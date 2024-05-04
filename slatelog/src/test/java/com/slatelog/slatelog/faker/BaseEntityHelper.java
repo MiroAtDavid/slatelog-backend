@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.slatelog.slatelog.faker;
 
 import com.slatelog.slatelog.domain.BaseEntity;
@@ -30,3 +31,7 @@ public class BaseEntityHelper {
         }
     }
 }
+=======
+package com.slatelog.slatelog.faker;public class BaseEntityHelper {
+}
+>>>>>>> 11a96e5 (invitaitonEmail(emailService))

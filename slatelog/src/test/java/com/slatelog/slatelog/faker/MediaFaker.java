@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.slatelog.slatelog.faker;
 
 import com.slatelog.slatelog.domain.media.Media;
@@ -36,3 +37,7 @@ public class MediaFaker {
         medias.forEach(System.out::println);
     }
 }
+=======
+package com.slatelog.slatelog.faker;public class MediaFaker {
+}
+>>>>>>> 11a96e5 (invitaitonEmail(emailService))
