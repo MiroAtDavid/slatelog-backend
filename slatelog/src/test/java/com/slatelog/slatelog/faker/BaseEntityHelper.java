@@ -1,0 +1,32 @@
+package com.slatelog.slatelog.faker;
+
+import com.slatelog.slatelog.domain.BaseEntity;
+
+import java.lang.reflect.Field;
+
+public class BaseEntityHelper {
+
+    //    public static Object setField(Object entity) {
+    //    public static void setField(Object instance, String field, Object value) {
+    public static <T extends BaseEntity<?>> void setBaseEntityField(
+            T entity, String field, Object value) {
+
+        try {
+            // Reflection API from java
+            Class<?> clazz = entity.getClass();
+
+            // Get the field of the BaseEntity
+            Field declaredField = clazz.getSuperclass().getDeclaredField(field);
+
+            // Set the field to be accessed
+            declaredField.setAccessible(true);
+
+            // Set the value
+            declaredField.set(entity, value);
+
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            // This should never happen
+            throw new RuntimeException(e);
+        }
+    }
+}

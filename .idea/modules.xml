@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/FX_Main_mit_og-backend.iml" filepath="$PROJECT_DIR$/.idea/FX_Main_mit_og-backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/slatelog.main.iml" filepath="$PROJECT_DIR$/.idea/modules/slatelog.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/slatelog.test.iml" filepath="$PROJECT_DIR$/.idea/modules/slatelog.test.iml" />
+    </modules>
+  </component>
+</project>

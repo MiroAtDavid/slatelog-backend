@@ -1,3 +1,4 @@
+
 package com.slatelog.slatelog.persistence;
 
 
@@ -30,7 +31,8 @@ import static org.hamcrest.Matchers.*;
 
 @DataMongoTest
 @Import(MongoConfig.class)
-public class EventRepositoryTest {
+public class
+EventRepositoryTest {
 
     @Autowired
     private EventRepository eventRepository;
