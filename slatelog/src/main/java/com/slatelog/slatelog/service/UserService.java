@@ -29,10 +29,10 @@ public class UserService {
         LOGGER.debug("User login {}", user);
 
         // Fetch all associated data for that user from repositories (e.g. posts, messengers, etc.).
-        List<Event> posts = eventRepository.findByUserId(user.getId());
+        List<Event> events = eventRepository.findByUserId(user.getId());
         // List<Messenger> messenger = messengerRepository.findByParticipantId(user.getId());
 
-        LoginView loginView = mapper.toLoginView(user, posts);
+        LoginView loginView = mapper.toLoginView(user, events);
         LOGGER.debug("User login sucessfull {}", loginView);
         return loginView;
     }

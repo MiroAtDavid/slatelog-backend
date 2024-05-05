@@ -104,7 +104,3 @@ tasks.register<Exec>("restoreDump") {
 	commandLine("mongorestore", "--db=$dbName", "--archive=./db/db.dump", "--gzip")
 }
 
-tasks.register("da wenz is a ei") {
-	group ="application"
-	println("jo des stimb")
-}

@@ -14,6 +14,6 @@ import java.util.List;
 public interface LoginViewMapper {
 
     LoginViewMapper INSTANCE = Mappers.getMapper(LoginViewMapper.class);
-
     LoginView toLoginView(User user, List<Event> events);
+
 }
