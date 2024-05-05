@@ -15,9 +15,9 @@ import java.util.stream.Stream;
 
 
 public class EventFaker {
-    private static final int NUM_HASH_TAGS = 3;
 
     private static final Faker faker = new Faker();
+    private static final int NUM_HASH_TAGS = 3;
 
     public static Event createEvent(String userId) {
 

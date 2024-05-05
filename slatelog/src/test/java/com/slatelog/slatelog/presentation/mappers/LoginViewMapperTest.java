@@ -23,9 +23,8 @@ public class LoginViewMapperTest {
 
         // Given
         User user = UserFixture.createUser();
-        // List<Post> posts = Stream.generate(() -> PostFixture.createTextPost()).limit(3).toList();
         List<Event> events = Stream.generate(EventFixture::createEvent).limit(3).toList();
-        // List<Post> posts = Arrays.asList(PostFixture.createTextPost());
+
         LoginViewMapper mapper = LoginViewMapper.INSTANCE;
 
         // When
@@ -34,7 +33,6 @@ public class LoginViewMapperTest {
         // Then
         assertThat(loginView, notNullValue());
         assertThat(loginView.user(), notNullValue());
-        // assertThat(loginView.posts(), notNullValue());
 
     }
 }

@@ -81,6 +81,15 @@ public class EventFixture {
         INVITATIONS.add(INVITATION2);
 
 
+        // Create HashTags
+        HashTag tag1 = new HashTag("pakao");
+        HashTag tag2 = new HashTag("hell");
+        HashTag tag3 = new HashTag("hoelle");
+
+        HASH_TAGS.add(tag1);
+        HASH_TAGS.add(tag2);
+        HASH_TAGS.add(tag3);
+
         // Creating the Event Itself
         Event event = new Event(user.getId(), TITLE, DESCRIPTION, poll, location, INVITATIONS, null, HASH_TAGS);
 

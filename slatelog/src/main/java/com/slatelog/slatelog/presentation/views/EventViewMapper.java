@@ -32,7 +32,7 @@ public interface EventViewMapper {
     // If the target field is a derived field,
     //   we can use the @Mapping annotation with a qualifiedByName to call a method
     @Mapping(source = "medias", target = "thumb", qualifiedByName = "selectThumb")
-    Views.EventView toEventView(Event event);
+    EventView toEventView(Event event);
 
     // The custom method to select the first media as the thumb
     @Named("selectThumb")
