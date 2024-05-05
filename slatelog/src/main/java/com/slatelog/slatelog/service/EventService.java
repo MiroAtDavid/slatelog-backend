@@ -55,8 +55,7 @@ public class EventService {
         Event event = new Event(user.getId(), title, description, poll, addressObject, invitations, null);
 
         // Save Event
-        var savedEvent = eventRepository.save(event);
-        return savedEvent;
+        return eventRepository.save(event);
     }
 
 

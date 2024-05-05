@@ -51,6 +51,11 @@ dependencies {
 	// Crypto Bouncy Castle
 	implementation("org.bouncycastle:bcpkix-jdk15on:1.70")
 
+	// Map Struct
+	implementation("org.mapstruct:mapstruct:1.5.3.Final")
+	annotationProcessor("org.mapstruct:mapstruct-processor:1.5.3.Final")
+
+	// DateFaker
 	implementation("net.datafaker:datafaker:2.2.3-SNAPSHOT")
 
 }
