@@ -32,7 +32,7 @@ public class MediaFaker {
     // for testing
     public static void main(String[] args) {
 
-        var medias = createMedias(10);
+        var medias = createMedias(1);
         medias.forEach(System.out::println);
     }
 }
