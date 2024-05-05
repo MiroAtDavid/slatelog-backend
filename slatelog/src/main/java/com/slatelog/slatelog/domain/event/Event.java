@@ -30,7 +30,7 @@ import static com.slatelog.slatelog.foundation.EntityUtil.generateUUIDv4;
 // underscore class check
 public class Event extends BaseEntity<String> {
 
-    @Indexed(unique = true)
+    @Indexed()
     private String userId;
     private String title;
     private @Nullable String description;
