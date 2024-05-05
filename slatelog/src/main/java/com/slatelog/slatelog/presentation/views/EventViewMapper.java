@@ -2,7 +2,7 @@ package com.slatelog.slatelog.presentation.views;
 
 import com.slatelog.slatelog.domain.media.Media;
 import com.slatelog.slatelog.domain.event.Event;
-import com.slatelog.slatelog.presentation.views.Views.PostView;
+import com.slatelog.slatelog.presentation.views.Views.EventView;
 import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -27,12 +27,12 @@ public interface EventViewMapper {
 
     // If the target field is a derived field,
     //   we can use the @Mapping annotation with an expression to execute a short code
-    @Mapping(expression = "java(post.getLikes().size())", target = "likes")
+    @Mapping(expression = "java(event.getLikes().size())", target = "likes")
 
     // If the target field is a derived field,
     //   we can use the @Mapping annotation with a qualifiedByName to call a method
     @Mapping(source = "medias", target = "thumb", qualifiedByName = "selectThumb")
-    PostView toPostView(Event event);
+    Views.EventView toEventView(Event event);
 
     // The custom method to select the first media as the thumb
     @Named("selectThumb")
@@ -47,4 +47,5 @@ public interface EventViewMapper {
         }
         return null;
     }
+
 }

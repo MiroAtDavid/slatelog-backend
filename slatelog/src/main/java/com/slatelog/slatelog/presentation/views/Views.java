@@ -64,12 +64,12 @@ public abstract class Views {
 
     // What is a PostView?
     // A PostView is a view that contains the data for a post.
-    public record PostView(
+    public record EventView(
             String id, String creatorId, String text, Media thumb, Set<HashTag> hashTags, int likes) {}
 
     // What is a LoginView?
     // A LoginView is a view that contains the data for the user and his associated data for login.
-    public record LoginView(UserView user, List<PostView> posts
+    public record LoginView(UserView user, List<EventView> events
                             // List<MessengerView> messenger,
     ) {}
 }
