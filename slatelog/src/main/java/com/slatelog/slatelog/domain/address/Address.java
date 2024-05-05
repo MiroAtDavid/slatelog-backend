@@ -1,6 +1,9 @@
 package com.slatelog.slatelog.domain.address;
 
+
+
 import static com.slatelog.slatelog.foundation.AssertUtil.hasMaxText;
+
 
 // Defining a record for representing an address
 public record Address (

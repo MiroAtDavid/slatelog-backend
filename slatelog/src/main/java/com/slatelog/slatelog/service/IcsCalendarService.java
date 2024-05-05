@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class IcsCalendarService {
-    public static void generateICSFile(String title, List<Instant> instantList,
+    public static String generateICSFile(String title, List<Instant> instantList,
                                        String description, String location, String organizer, String[] attendees,
                                        String filePath) {
         // Format date-time according to iCalendar format
@@ -59,6 +59,7 @@ public class IcsCalendarService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return icsContent.toString();
     }
 
 }

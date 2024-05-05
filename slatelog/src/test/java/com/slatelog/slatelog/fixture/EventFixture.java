@@ -35,6 +35,7 @@ public class EventFixture {
     public static final Instant INST2 = INSTANT_KEY2.truncatedTo(ChronoUnit.MINUTES);
     public static final Set<Invitation> INVITATIONS = new HashSet<>();
     public static final Set<HashTag> HASH_TAGS = new HashSet<>();
+    public static byte[] ICSFILEDATA; // Binary data to store ICS file in MongoDB
 
 
     public static Event createEvent() {
@@ -90,9 +91,12 @@ public class EventFixture {
         HASH_TAGS.add(tag2);
         HASH_TAGS.add(tag3);
 
-        // Creating the Event Itself
 
-        return new Event(user.getId(), TITLE, DESCRIPTION, poll, location, INVITATIONS, null, HASH_TAGS);
+        // Creating the Event
+        Event CREATEDEVENT;
+        CREATEDEVENT = new Event(user.getId(), TITLE, DESCRIPTION, poll, location, INVITATIONS, null, HASH_TAGS);
+
+        return CREATEDEVENT;
     }
 }
 

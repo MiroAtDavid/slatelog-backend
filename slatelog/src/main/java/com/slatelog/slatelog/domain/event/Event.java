@@ -4,15 +4,20 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.slatelog.slatelog.domain.BaseEntity;
 import com.slatelog.slatelog.domain.address.Address;
 import com.slatelog.slatelog.domain.media.Media;
+import com.slatelog.slatelog.service.IcsCalendarService;
 import jakarta.annotation.Nullable;
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.Duration;
+import java.time.*;
+
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -41,6 +46,7 @@ public class Event extends BaseEntity<String> {
     private @Nullable Set<HashTag> hashTags;
     private Set<Like> likes;
     public static final Duration EMAIL_VERIFICATION_DURATION = Duration.ofHours(24);
+    private byte[] icsFileData; // Binary data to store ICS file in MongoDB
 
     /**
      * Default constructor for Spring Data.
@@ -76,5 +82,67 @@ public class Event extends BaseEntity<String> {
         this.hashTags = hasMaxSizeOrNull(hashTags, 10, "hashTags");
         this.likes = new HashSet<>();
         this.invitations = invitations;
+        this.icsFileData = createIcsFileData();
     }
+
+    public byte[] createIcsFileData() {
+
+        Set<Instant> eventDates = getPoll().getPollOptions().keySet();
+        List<Instant> instantList = new ArrayList<>();
+        instantList.addAll(eventDates);
+
+        LocalDateTime eventCreatedAt = LocalDateTime.now();
+        LocalDateTime eventEndTime = eventCreatedAt.plusHours(1);
+        String eventLocationState = getLocation().state().toString();
+        String eventLocationCity = getLocation().city().toString();
+        String eventLocationZip = getLocation().zipCode().toString();
+        String eventLocationStreet = getLocation().street() .toString();
+        String eventLocation = eventLocationState + ", " + eventLocationCity + " " + eventLocationZip + ", " + eventLocationStreet;
+
+        String [] invitationEmails = getInvitations().stream()
+                .map(Invitation::getEmail)
+                .toArray(String[]::new);
+
+        // Format date-time according to iCalendar format
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss");
+
+        // Construct iCalendar data
+        StringBuilder icsContent = new StringBuilder();
+        icsContent.append("BEGIN:VCALENDAR\n");
+        icsContent.append("VERSION:2.0\n");
+
+        // Iterate over each Instant in the list
+        for (Instant startTime : instantList) {
+            // Calculate end time by adding one hour
+            Instant endTime = startTime.plus(Duration.ofHours(1));
+
+            // Convert Instant to ZonedDateTime with UTC time zone
+            ZonedDateTime startDateTime = ZonedDateTime.ofInstant(startTime, ZoneId.of("UTC"));
+            ZonedDateTime endDateTime = ZonedDateTime.ofInstant(endTime, ZoneId.of("UTC"));
+
+            // Format start and end times
+            String formattedStart = startDateTime.format(formatter);
+            String formattedEnd = endDateTime.format(formatter);
+
+            // Append event details to the icsContent StringBuilder
+            icsContent.append("BEGIN:VEVENT\n");
+            icsContent.append("DTSTART:" + formattedStart + "\n");
+            icsContent.append("DTEND:" + formattedEnd + "\n");
+            icsContent.append("SUMMARY:" + title + "\n");
+            icsContent.append("DESCRIPTION:" + description + "\n");
+            icsContent.append("LOCATION:" + eventLocation + "\n");
+            icsContent.append("ORGANIZER:" + getUserId() + "\n");
+            for (String attendee : invitationEmails) {
+                icsContent.append("ATTENDEE:" + attendee + "\n");
+            }
+            icsContent.append("END:VEVENT\n");
+        }
+        byte[] ics = icsContent.toString().getBytes();
+        return ics;
+    }
+
+
+
 }
+
+

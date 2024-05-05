@@ -105,7 +105,7 @@ EventRepositoryTest {
         List<Instant> instantList = new ArrayList<>();
         instantList.addAll(eventDates);
 
-        LocalDateTime eventCreatedAt =  LocalDateTime.ofInstant(eventSaved.getCreatedAt(), ZoneId.systemDefault());
+        LocalDateTime eventCreatedAt =  LocalDateTime.now();
         LocalDateTime eventEndTime = eventCreatedAt.plusHours(1);
         String eventLocationState = eventSaved.getLocation().state().toString();
         String eventLocationCity = eventSaved.getLocation().city().toString();
