@@ -1,0 +1,51 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+DTSTART:20240510T110200
+DTEND:20240510T120200
+SUMMARY:Meeting
+DESCRIPTION:Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum
+LOCATION:Austria, Wien 1050, Spengergasse 7
+ORGANIZER:dav210957@spengergasse.at
+ATTENDEE:wenz@spengergasse.at
+ATTENDEE:wenz@spengergasse.at
+ATTENDEE:dav210957@spengergasse.at
+ATTENDEE:dav210957@spengergasse.at
+ATTENDEE:dav210957@spengergasse.at
+ATTENDEE:dav210957@spengergasse.at
+ATTENDEE:wenz@spengergasse.at
+ATTENDEE:wenz@spengergasse.at
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20240511T110200
+DTEND:20240511T120200
+SUMMARY:Meeting
+DESCRIPTION:Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum
+LOCATION:Austria, Wien 1050, Spengergasse 7
+ORGANIZER:dav210957@spengergasse.at
+ATTENDEE:wenz@spengergasse.at
+ATTENDEE:wenz@spengergasse.at
+ATTENDEE:dav210957@spengergasse.at
+ATTENDEE:dav210957@spengergasse.at
+ATTENDEE:dav210957@spengergasse.at
+ATTENDEE:dav210957@spengergasse.at
+ATTENDEE:wenz@spengergasse.at
+ATTENDEE:wenz@spengergasse.at
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20240512T110200
+DTEND:20240512T120200
+SUMMARY:Meeting
+DESCRIPTION:Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum
+LOCATION:Austria, Wien 1050, Spengergasse 7
+ORGANIZER:dav210957@spengergasse.at
+ATTENDEE:wenz@spengergasse.at
+ATTENDEE:wenz@spengergasse.at
+ATTENDEE:dav210957@spengergasse.at
+ATTENDEE:dav210957@spengergasse.at
+ATTENDEE:dav210957@spengergasse.at
+ATTENDEE:dav210957@spengergasse.at
+ATTENDEE:wenz@spengergasse.at
+ATTENDEE:wenz@spengergasse.at
+END:VEVENT
+END:VCALENDAR

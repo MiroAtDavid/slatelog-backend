@@ -20,6 +20,7 @@ configurations {
 
 repositories {
 	mavenCentral()
+	maven(url = "https://s01.oss.sonatype.org/content/repositories/snapshots")
 }
 
 dependencies {
@@ -49,6 +50,8 @@ dependencies {
 
 	// Crypto Bouncy Castle
 	implementation("org.bouncycastle:bcpkix-jdk15on:1.70")
+
+	implementation("net.datafaker:datafaker:2.2.3-SNAPSHOT")
 
 }
 
