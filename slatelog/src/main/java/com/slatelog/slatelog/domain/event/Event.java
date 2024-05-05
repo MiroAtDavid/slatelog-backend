@@ -38,6 +38,7 @@ public class Event extends BaseEntity<String> {
     private @Nullable Address location;
     private @Nullable Set<Invitation> invitations;
     private @Nullable List<Media> medias;
+    private Set<HashTag> hashTags;
     private Set<Like> likes;
     public static final Duration EMAIL_VERIFICATION_DURATION = Duration.ofHours(24);
 
@@ -62,7 +63,7 @@ public class Event extends BaseEntity<String> {
      * @param invitations  Invitations for the Event.
      * @param medias      Optional media associated with the Event.
      */
-    public Event (String userId, String title, @Nullable String description, Poll poll, @Nullable Address location, Set<Invitation> invitations, @Nullable List<Media> medias) {
+    public Event (String userId, String title, @Nullable String description, Poll poll, @Nullable Address location, Set<Invitation> invitations, @Nullable List<Media> medias, Set<HashTag> hashTags) {
         super(generateUUIDv4());
 
         isTrue(title != null || medias != null, "text or medias must not be null");
@@ -72,6 +73,7 @@ public class Event extends BaseEntity<String> {
         this.poll = isNotNull(poll, "poll");
         this.location = location;
         this.medias = hasMaxSizeOrNull(medias, 10, "medias");
+        this.hashTags = hasMaxSize(hashTags, 10, "hashTags");
         this.likes = new HashSet<>();
         this.invitations = invitations;
     }

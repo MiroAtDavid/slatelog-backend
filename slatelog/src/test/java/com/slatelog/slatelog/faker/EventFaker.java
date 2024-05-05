@@ -10,10 +10,12 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
 public class EventFaker {
+    private static final int NUM_HASH_TAGS = 3;
 
     private static final Faker faker = new Faker();
 
@@ -85,8 +87,9 @@ public class EventFaker {
 
         // Create Medias
         List<Media> medias = MediaFaker.createMedias(3);
+        var hashTags = fakeHashTags(NUM_HASH_TAGS);
 
-        var event = new Event(userId, eventTitle, description, poll, eventAddress, invitations, medias);
+        var event = new Event(userId, eventTitle, description, poll, eventAddress, invitations, medias, hashTags);
 
         // setBaseEntityField(user, "createdAt", Instant.now());
         // setBaseEntityField(user, "lastModifiedAt", Instant.now());
@@ -105,5 +108,11 @@ public class EventFaker {
 
         var events = createEvents("userId", 10);
         events.forEach(System.out::println);
+    }
+
+    private static Set<HashTag> fakeHashTags(int n) {
+        return Stream.generate(() -> new HashTag(faker.lorem().word()))
+                .limit(n)
+                .collect(Collectors.toSet());
     }
 }

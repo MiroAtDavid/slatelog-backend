@@ -50,9 +50,10 @@ public class EventService {
                 .map(Invitation::new)
                 .collect(Collectors.toSet());
 
+        Set<HashTag> hashTags = Set.of();
 
         // Create the Event
-        Event event = new Event(user.getId(), title, description, poll, addressObject, invitations, null);
+        Event event = new Event(user.getId(), title, description, poll, addressObject, invitations, null, hashTags);
 
         // Save Event
         return eventRepository.save(event);

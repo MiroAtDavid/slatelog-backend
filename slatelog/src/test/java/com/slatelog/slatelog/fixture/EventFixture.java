@@ -34,6 +34,8 @@ public class EventFixture {
     public static Instant INSTANT_KEY2 = Instant.now().plus(Duration.ofDays(7));
     public static final Instant INST2 = INSTANT_KEY2.truncatedTo(ChronoUnit.MINUTES);
     public static final Set<Invitation> INVITATIONS = new HashSet<>();
+    public static final Set<HashTag> HASH_TAGS = new HashSet<>();
+
 
     public static Event createEvent() {
 
@@ -80,7 +82,7 @@ public class EventFixture {
 
 
         // Creating the Event Itself
-        Event event = new Event(user.getId(), TITLE, DESCRIPTION, poll, location, INVITATIONS, null);
+        Event event = new Event(user.getId(), TITLE, DESCRIPTION, poll, location, INVITATIONS, null, HASH_TAGS);
 
         return event;
     }
