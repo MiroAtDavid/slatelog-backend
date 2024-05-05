@@ -74,3 +74,30 @@ spotless {
 tasks.named("check") {
 	dependsOn("spotlessJavaApply")
 }
+
+tasks.register<JavaExec>("loadFakeData") {
+	group = "database"
+	description = "Run the application with fake data"
+	classpath = sourceSets["test"].runtimeClasspath + sourceSets["main"].runtimeClasspath
+	mainClass = "com.slatelog.slatelog.faker.FakeDataLoaderRunner"
+
+	// Provide a default value for dbName if it's not specified as a project property
+	val dbName: String = project.findProperty("dbName") as String? ?: "slatelog"
+	args("--spring.data.mongodb.database=$dbName")
+}
+
+tasks.register<Exec>("createDump") {
+	group = "database"
+	description = "Creates a dump of the MongoDB database and zips it."
+
+	val dbName: String = project.findProperty("dbName") as String? ?: "slatelog"
+	commandLine("mongodump", "--db=$dbName", "--archive=./db/db.dump", "--gzip")
+}
+
+tasks.register<Exec>("restoreDump") {
+	group = "database"
+	description = "Restores the MongoDB database from a zipped dump."
+
+	val dbName: String = project.findProperty("dbName") as String? ?: "slatelog"
+	commandLine("mongorestore", "--db=$dbName", "--archive=./db/db.dump", "--gzip")
+}
