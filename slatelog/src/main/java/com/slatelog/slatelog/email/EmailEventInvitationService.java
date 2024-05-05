@@ -1,5 +1,7 @@
 package com.slatelog.slatelog.email;
 
+import com.slatelog.slatelog.domain.event.Event;
+import com.slatelog.slatelog.domain.event.Invitation;
 import com.slatelog.slatelog.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,9 +12,6 @@ import org.springframework.stereotype.Service;
 public class EmailEventInvitationService {
 
     private final EMailSender mailSender;
-
-    // private final JavaMailSenderImpl mailSender;
-    // private final LoggerMailSenderImpl mailSender;
 
     // The protocol of the server where the application is running.
     @Value("http")
@@ -26,20 +25,14 @@ public class EmailEventInvitationService {
     @Value("8080")
     private String port;
 
-    // The verification link that is sent to the user which he has to click to verify his email.
-    // TODO!!!!! Create appropriate link for the event poll
-    private final String EVENT_LINK = "%s://%s:%s/api/registration/token?userId=%s&tokenId=%s";
+    // The event poll link that is sent to the user to vote on event times.
+    private final String EVENT_LINK = "%s://%s:%s/api/event/poll?eventId=%s&emailToken=%s";
 
     // Send Invitation Email
-    // --------------------------------------------------------------------------------------------
-    // @Async
-    // public void sendVerificationEmail(User user, String tokenId) {
-    public void sendVerificationEmail(User user) {
-        // We build the EmailDTO object and send it to the mailSender.
-        // TODO!!!!! email must be set form the event invitation email list
-        var receiver = user.getAccount().getVerificationEmail();
+    public void sendInvitationEmail(Event event, Invitation invitation) {
+        var receiver = invitation.getEmail();
         var subject = getInvitationEmailSubject();
-        var body = getInvitationEmailBody(user);
+        var body = getInvitationEmailBody(event, invitation);
         mailSender.sendMail(new EmailDTO(receiver, subject, body));
     }
 
@@ -47,9 +40,8 @@ public class EmailEventInvitationService {
         return "You have been invited to an Event";
     }
 
-    // TODO!!!!! adjust body with data
-    public String getInvitationEmailBody(User user) {
-        String token = user.getAccount().getVerificationEmailToken();
-        return String.format(EVENT_LINK, protocol, domain, port, user.getId(), token);
+    public String getInvitationEmailBody(Event event, Invitation invitation) {
+        String token =  invitation.getEmailToken().toString();
+        return String.format(EVENT_LINK, protocol, domain, port, event.getId(), token);
     }
 }
