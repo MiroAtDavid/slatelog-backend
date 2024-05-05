@@ -103,3 +103,8 @@ tasks.register<Exec>("restoreDump") {
 	val dbName: String = project.findProperty("dbName") as String? ?: "slatelog"
 	commandLine("mongorestore", "--db=$dbName", "--archive=./db/db.dump", "--gzip")
 }
+
+tasks.register("da wenz is a ei") {
+	group ="application"
+	println("jo des stimb")
+}

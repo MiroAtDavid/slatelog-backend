@@ -74,7 +74,7 @@ public class EventFixture {
         POLLMAP.put(INST2, ANSWERS2);
         var poll = new Poll(POLLMAP);
 
-        // Event Inivitations
+        // Event Invitations
         INVITATION = new Invitation(user.getEmail());
         INVITATION2 = new Invitation(EMAIL);
         INVITATIONS.add(INVITATION);
@@ -91,9 +91,8 @@ public class EventFixture {
         HASH_TAGS.add(tag3);
 
         // Creating the Event Itself
-        Event event = new Event(user.getId(), TITLE, DESCRIPTION, poll, location, INVITATIONS, null, HASH_TAGS);
 
-        return event;
+        return new Event(user.getId(), TITLE, DESCRIPTION, poll, location, INVITATIONS, null, HASH_TAGS);
     }
 }
 
