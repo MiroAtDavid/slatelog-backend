@@ -62,8 +62,8 @@ public abstract class Views {
     public record UserView(
             String id, String email, List<Role> roles, Profile profile, Social social) {}
 
-    // What is a PostView?
-    // A PostView is a view that contains the data for a post.
+    // What is a EventView?
+    // A EventView is a view that contains the data for an event.
     public record EventView(
             String id, String creatorId, String text, Media thumb, Set<HashTag> hashTags, int likes) {}
 
