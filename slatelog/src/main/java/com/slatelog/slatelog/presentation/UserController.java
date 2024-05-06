@@ -23,6 +23,6 @@ public class UserController {
     @GetMapping
     public Views.LoginView login(@AuthenticationPrincipal SecurityUser principal) {
         LOGGER.debug("User contoller#login {}", principal);
-            return userService.login(principal.getUser());
+        return userService.login(principal.getUser());
     }
 }
