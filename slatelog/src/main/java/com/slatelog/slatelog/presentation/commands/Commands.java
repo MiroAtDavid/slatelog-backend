@@ -38,14 +38,18 @@ public class Commands {
     // Coop Edren Datenübertragung
     // event id
     public record UpdateEventCommand (
-            String eventId,
             String title,
-            String address,
-            String deadlineDate,
-            String deadlineTime,
             String description,
-            String emails,
-            String dateTimes
+            List<String> pollOptions,
+            String locationStreet,
+            String locationCity,
+            String locationState,
+            String locationZipCode,
+            String deadlineDate,    // TODO
+            String deadlineTime,    // TODO
+            Set<String> likes,
+            Set<String> hashTags,
+            List<String> invitationEmails
     ){};
 
 
