@@ -50,7 +50,7 @@ public class EmailEventInvitationService {
     // Generates the body content for the invitation email
     public String getInvitationEmailBody(Event event, Invitation invitation) {
         // Extracting the email token from the invitation
-        String token =  invitation.getEmailToken().toString();
+        String token =  invitation.getInvitationToken().toString();
         // Generating the complete invitation link using the event ID and email token
         return String.format(EVENT_LINK, protocol, domain, port, event.getId(), token);
     }

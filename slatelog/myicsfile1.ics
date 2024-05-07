@@ -1,51 +1,51 @@
 BEGIN:VCALENDAR
 VERSION:2.0
 BEGIN:VEVENT
-DTSTART:20240512T111900
-DTEND:20240512T121900
+DTSTART:20240512T120400
+DTEND:20240512T130400
 SUMMARY:Meeting
 DESCRIPTION:Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum
 LOCATION:Austria, Wien 1050, Spengergasse 7
 ORGANIZER:dav210957@spengergasse.at
 ATTENDEE:wenz@spengergasse.at
-ATTENDEE:dav210957@spengergasse.at
-ATTENDEE:dav210957@spengergasse.at
+ATTENDEE:wenz@spengergasse.at
 ATTENDEE:dav210957@spengergasse.at
 ATTENDEE:dav210957@spengergasse.at
 ATTENDEE:wenz@spengergasse.at
-ATTENDEE:wenz@spengergasse.at
+ATTENDEE:dav210957@spengergasse.at
+ATTENDEE:dav210957@spengergasse.at
 ATTENDEE:wenz@spengergasse.at
 END:VEVENT
 BEGIN:VEVENT
-DTSTART:20240513T111900
-DTEND:20240513T121900
+DTSTART:20240513T120400
+DTEND:20240513T130400
 SUMMARY:Meeting
 DESCRIPTION:Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum
 LOCATION:Austria, Wien 1050, Spengergasse 7
 ORGANIZER:dav210957@spengergasse.at
 ATTENDEE:wenz@spengergasse.at
-ATTENDEE:dav210957@spengergasse.at
-ATTENDEE:dav210957@spengergasse.at
+ATTENDEE:wenz@spengergasse.at
 ATTENDEE:dav210957@spengergasse.at
 ATTENDEE:dav210957@spengergasse.at
 ATTENDEE:wenz@spengergasse.at
-ATTENDEE:wenz@spengergasse.at
+ATTENDEE:dav210957@spengergasse.at
+ATTENDEE:dav210957@spengergasse.at
 ATTENDEE:wenz@spengergasse.at
 END:VEVENT
 BEGIN:VEVENT
-DTSTART:20240514T111900
-DTEND:20240514T121900
+DTSTART:20240514T120400
+DTEND:20240514T130400
 SUMMARY:Meeting
 DESCRIPTION:Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum
 LOCATION:Austria, Wien 1050, Spengergasse 7
 ORGANIZER:dav210957@spengergasse.at
 ATTENDEE:wenz@spengergasse.at
-ATTENDEE:dav210957@spengergasse.at
-ATTENDEE:dav210957@spengergasse.at
+ATTENDEE:wenz@spengergasse.at
 ATTENDEE:dav210957@spengergasse.at
 ATTENDEE:dav210957@spengergasse.at
 ATTENDEE:wenz@spengergasse.at
-ATTENDEE:wenz@spengergasse.at
+ATTENDEE:dav210957@spengergasse.at
+ATTENDEE:dav210957@spengergasse.at
 ATTENDEE:wenz@spengergasse.at
 END:VEVENT
 END:VCALENDAR
