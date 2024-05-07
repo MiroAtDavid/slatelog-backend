@@ -17,26 +17,25 @@ public class Invitation {
 
     // Email address associated with the invitation
     private String email;
-
     // Token associated with the email for verification
     private @Nullable Token emailToken;
-
     // Event invitation voting end date
     private Instant tokenExpirationDate;
-
-    // TODO We need to get this from the poll
+    // TODO !!! We need to get this from the poll
     private boolean pollIsOpen;
 
     // Constructor to create an Invitation with an email and token
     public Invitation(String email) {
         this.email = email;
-        // TODO implement event poll voting endTime
+        // TODO !!! implement event poll voting endTime
         setEmailToken(email);
     }
 
     // Default constructor (
     protected Invitation(){};
 
+    // TODO !!!
+    // The pollIsOpen boolean shold be passed down from either the poll of the event
     private void setEmailToken(String email){
         // TODO implement event poll voting endTime
         // TODO implement event poll boolean isOpen()
