@@ -25,8 +25,9 @@ public class Invitation {
     private boolean pollIsOpen = true;
 
     // Constructor to create an Invitation with an email and token
-    public Invitation(String email) {
+    public Invitation(String email, Instant tokenExpirationDate) {
         this.email = email;
+        this.tokenExpirationDate = tokenExpirationDate;
         // TODO !!! implement event poll voting endTime
         setEmailToken(email);
     }
@@ -36,12 +37,17 @@ public class Invitation {
 
     // TODO !!!
     // The pollIsOpen boolean shold be passed down from either the poll of the event
-    private void setEmailToken(String email){
-        // TODO implement event poll voting endTime
-        // TODO implement event poll boolean isOpen()
-        if (!pollIsOpen) invitationToken = null;
-         else this.invitationToken = InvitationEmailToken.generateInvitationToken(
-                 email,
-                 Instant.now().plus(Duration.ofHours(24)));
+    private void setEmailToken(String email) {
+        if (!pollIsOpen || tokenExpirationDate == null || tokenExpirationDate.isBefore(Instant.now())) {
+            invitationToken = null;
+        } else {
+            Duration durationUntilExpiration = Duration.between(Instant.now(), tokenExpirationDate);
+            this.invitationToken = InvitationEmailToken.generateInvitationToken(
+                    email,
+                    Instant.now().plus(durationUntilExpiration)
+            );
+        }
     }
+
+
 }

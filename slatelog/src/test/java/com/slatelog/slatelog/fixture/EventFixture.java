@@ -36,6 +36,7 @@ public class EventFixture {
     public static final Set<Invitation> INVITATIONS = new HashSet<>();
     public static final Set<HashTag> HASH_TAGS = new HashSet<>();
     public static byte[] ICSFILEDATA; // Binary data to store ICS file in MongoDB
+    public static final Instant VOTEDEADLINE = Instant.now().plus(Duration.ofHours(24));
 
 
     public static Event createEvent() {
@@ -76,8 +77,8 @@ public class EventFixture {
         var poll = new Poll(POLLMAP);
 
         // Event Invitations
-        INVITATION = new Invitation(user.getEmail());
-        INVITATION2 = new Invitation(EMAIL);
+        INVITATION = new Invitation(user.getEmail(),VOTEDEADLINE);
+        INVITATION2 = new Invitation(EMAIL,VOTEDEADLINE);
         INVITATIONS.add(INVITATION);
         INVITATIONS.add(INVITATION2);
 

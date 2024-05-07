@@ -35,7 +35,7 @@ public class EventService {
         LocalDateTime eventDateTime = LocalDateTime.parse(deadlineDate + "T" + deadlineTime);
 
         // TODO - implementation - Convert LocalDateTime to Instant
-        Instant eventInstant = eventDateTime.toInstant(ZoneOffset.UTC);
+        Instant eventDeadLineVoting = eventDateTime.toInstant(ZoneOffset.UTC);
         VoteOption voteOption;
         // Create poll options
         HashMap<Instant, List<Answer>> pollOptions = new HashMap<>();
@@ -54,7 +54,7 @@ public class EventService {
 
         // Create Invitation object
         Set<Invitation> invitations = emails.stream()
-                .map(Invitation::new)
+                .map(email -> new Invitation(email, eventDeadLineVoting))
                 .collect(Collectors.toSet());
 
         Set<HashTag> hashTags = Set.of();

@@ -45,7 +45,8 @@ public class Event extends BaseEntity<String> {
     private @Nullable List<Media> medias;
     private @Nullable Set<HashTag> hashTags;
     private Set<Like> likes;
-    public static final Duration EMAIL_VERIFICATION_DURATION = Duration.ofHours(24);
+    // public static final Duration EMAIL_VERIFICATION_DURATION = Duration.ofHours(24);
+    private Instant votingDeadLine;
     private byte[] icsFileData; // Binary data to store ICS file in MongoDB
 
     /**
