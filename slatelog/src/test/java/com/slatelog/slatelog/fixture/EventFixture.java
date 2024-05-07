@@ -74,7 +74,7 @@ public class EventFixture {
         POLLMAP.put(INST, ANSWERS);
         POLLMAP.put(INST1, ANSWERS2);
         POLLMAP.put(INST2, ANSWERS2);
-        var poll = new Poll(POLLMAP);
+        var poll = new Poll(POLLMAP, INSTANT_KEY2);
 
         // Event Invitations
         INVITATION = new Invitation(user.getEmail(),VOTEDEADLINE);

@@ -47,7 +47,7 @@ public class EventService {
             pollOptions.put(instant, new ArrayList<>());
         }
         // Create the Poll object
-        Poll poll = new Poll(pollOptions);
+        Poll poll = new Poll(pollOptions, eventDeadLineVoting);
 
         // Create Address object
         Address location = new Address(street, city, state, zipcode);

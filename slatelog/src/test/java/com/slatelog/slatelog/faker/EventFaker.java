@@ -73,11 +73,13 @@ public class EventFaker {
         instantanswersHashMap.put(eventDateTwo, answers);
         instantanswersHashMap.put(eventDateThree, answers);
 
-        // Create Poll for the Event
-        Poll poll = new Poll(instantanswersHashMap);
 
         // Create Invitation for the Event
         Instant voteDeadLine = Instant.now().plus(Duration.ofHours(24));
+
+        // Create Poll for the Event
+        Poll poll = new Poll(instantanswersHashMap, voteDeadLine);
+
 
         Invitation inviteOne = new Invitation(email1, voteDeadLine);
         Invitation inviteTwo = new Invitation(email2, voteDeadLine);

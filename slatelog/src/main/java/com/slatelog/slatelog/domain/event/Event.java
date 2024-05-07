@@ -31,8 +31,7 @@ import static com.slatelog.slatelog.foundation.EntityUtil.generateUUIDv4;
 @Getter
 @Setter
 @Document("event")
-@TypeAlias("event") // Mongodb check
-// underscore class check
+@TypeAlias("event")
 public class Event extends BaseEntity<String> {
 
     @Indexed()
@@ -45,9 +44,8 @@ public class Event extends BaseEntity<String> {
     private @Nullable List<Media> medias;
     private @Nullable Set<HashTag> hashTags;
     private Set<Like> likes;
-    // public static final Duration EMAIL_VERIFICATION_DURATION = Duration.ofHours(24);
     private Instant votingDeadLine;
-    private byte[] icsFileData; // Binary data to store ICS file in MongoDB
+    private byte[] icsFileData;
 
     /**
      * Default constructor for Spring Data.
