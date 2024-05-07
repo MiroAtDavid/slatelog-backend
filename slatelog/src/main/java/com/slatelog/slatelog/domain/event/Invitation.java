@@ -40,14 +40,9 @@ public class Invitation {
     private void setEmailToken(String email){
         // TODO implement event poll voting endTime
         // TODO implement event poll boolean isOpen()
-        if (!pollIsOpen){
-            emailToken = null;
-        } else {
-            this.emailToken = InvitationEmailToken.generateInvitationToken(email, Instant.now().plus(Duration.ofHours(24)));
-        }
-
+        if (!pollIsOpen) emailToken = null;
+         else this.emailToken = InvitationEmailToken.generateInvitationToken(
+                 email,
+                 Instant.now().plus(Duration.ofHours(24)));
     }
-
-
-
 }
