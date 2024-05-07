@@ -1,5 +1,8 @@
 package com.slatelog.slatelog.presentation.commands;
 
+import java.util.List;
+import java.util.Set;
+
 public class Commands {
 
     // --- Registration ---
@@ -15,16 +18,20 @@ public class Commands {
     // --- Verification ---
     public record UserVerificationCommand(String userId, String tokenId) {}
     ;
-    // Coop Edren Datenübertragung
-    // title, address, deadlineDate, daedlineTime, description, emails, dateTimes
+    // Received Data from FrontEnd
     public record CreateEventCommand (
             String title,
-            String address,
-            String deadlineDate,
-            String deadlineTime,
             String description,
-            String emails,
-            String dateTimes
+            List<String> pollOptions,
+            String locationStreet,
+            String locationCity,
+            String locationState,
+            String locationZipCode,
+            String deadlineDate,    // TODO
+            String deadlineTime,    // TODO
+            Set<String> likes,
+            Set<String> hashTags,
+            List<String> invitationEmails
     ){};
 
 

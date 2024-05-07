@@ -85,7 +85,7 @@ public class Event extends BaseEntity<String> {
         this.icsFileData = createIcsFileData();
     }
 
-    public byte[] createIcsFileData() {
+    private byte[] createIcsFileData() {
 
         Set<Instant> eventDates = getPoll().getPollOptions().keySet();
         List<Instant> instantList = new ArrayList<>();

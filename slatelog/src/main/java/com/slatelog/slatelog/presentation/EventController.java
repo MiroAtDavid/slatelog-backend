@@ -28,6 +28,4 @@ public class EventController {
     ){
         eventService.createEvent(principal.getUser(), command);
     }
-
-
 }
