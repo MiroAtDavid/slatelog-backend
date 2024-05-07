@@ -19,7 +19,7 @@ public class EventService {
 
     private final EventRepository eventRepository;
 
-    public Event createEvent(User user, CreateEventCommand command){
+    public void createEvent(User user, CreateEventCommand command){
         String title = command.title();
         String state = command.locationState();
         String city = command.locationCity();
@@ -64,29 +64,26 @@ public class EventService {
         // event.setIcsFileData(createIcsFileData(event)); //TODO check what's the smarter way to implement
         // Save Event
         saveEvent(event);
-        return event;
     }
 
-    // Method to save the event
+    // Encapsulated Method to save the event
     private void saveEvent(Event event) {
         eventRepository.save(event);
     }
 
-    // Other methods...
+    // Create Icalendar (*.ics) data
     private byte[] createIcsFileData(Event event) {
 
         Set<Instant> eventDates = event.getPoll().getPollOptions().keySet();
-        List<Instant> instantList = new ArrayList<>();
-        instantList.addAll(eventDates);
+        List<Instant> instantList = new ArrayList<>(eventDates);
 
         LocalDateTime eventCreatedAt = LocalDateTime.now();
         LocalDateTime eventEndTime = eventCreatedAt.plusHours(1);
-        String eventLocationState = event.getLocation().state().toString();
-        String eventLocationCity = event.getLocation().city().toString();
-        String eventLocationZip = event.getLocation().zipCode().toString();
-        String eventLocationStreet = event.getLocation().street() .toString();
+        String eventLocationState = event.getLocation().state();
+        String eventLocationCity = event.getLocation().city();
+        String eventLocationZip = event.getLocation().zipCode();
+        String eventLocationStreet = event.getLocation().street();
         String eventLocation = eventLocationState + ", " + eventLocationCity + " " + eventLocationZip + ", " + eventLocationStreet;
-
         String [] invitationEmails = event.getInvitations().stream()
                 .map(Invitation::getEmail)
                 .toArray(String[]::new);
@@ -114,14 +111,14 @@ public class EventService {
 
             // Append event details to the icsContent StringBuilder
             icsContent.append("BEGIN:VEVENT\n");
-            icsContent.append("DTSTART:" + formattedStart + "\n");
-            icsContent.append("DTEND:" + formattedEnd + "\n");
-            icsContent.append("SUMMARY:" + event.getTitle() + "\n");
-            icsContent.append("DESCRIPTION:" + event.getDescription() + "\n");
-            icsContent.append("LOCATION:" + eventLocation + "\n");
-            icsContent.append("ORGANIZER:" + event.getUserId() + "\n");
+            icsContent.append("DTSTART:").append(formattedStart).append("\n");
+            icsContent.append("DTEND:").append(formattedEnd).append("\n");
+            icsContent.append("SUMMARY:").append(event.getTitle()).append("\n");
+            icsContent.append("DESCRIPTION:").append(event.getDescription()).append("\n");
+            icsContent.append("LOCATION:").append(eventLocation).append("\n");
+            icsContent.append("ORGANIZER:").append(event.getUserId()).append("\n");
             for (String attendee : invitationEmails) {
-                icsContent.append("ATTENDEE:" + attendee + "\n");
+                icsContent.append("ATTENDEE:").append(attendee).append("\n");
             }
             icsContent.append("END:VEVENT\n");
         }

@@ -15,6 +15,7 @@ public class EventController {
 
     private final EventService eventService;
 
+    // TODO Why no constructor needed???
 
     @GetMapping("/{eventId}")
     public void getEvent(String eventId) {
@@ -22,10 +23,7 @@ public class EventController {
     }
 
     @PostMapping
-    public void createEvent(
-            @AuthenticationPrincipal SecurityUser principal,
-            @RequestBody CreateEventCommand command
-    ){
+    public void createEvent(@AuthenticationPrincipal SecurityUser principal, @RequestBody CreateEventCommand command) {
         eventService.createEvent(principal.getUser(), command);
     }
 }

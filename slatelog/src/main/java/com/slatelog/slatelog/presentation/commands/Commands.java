@@ -7,13 +7,11 @@ public class Commands {
 
     // --- Registration ---
     //  whiten input = email.trim().toLowerCase();
-    public record UserRegistrationCommand(
-            String email, String password, String firstName, String lastName) {
+    public record UserRegistrationCommand(String email, String password, String firstName, String lastName) {
         public String email() {
             return email.trim().toLowerCase();
         }
     }
-    ;
 
     // --- Verification ---
     public record UserVerificationCommand(String userId, String tokenId) {}
@@ -34,8 +32,7 @@ public class Commands {
             List<String> invitationEmails
     ){};
 
-
-    // Coop Edren Datenübertragung
+    // Received Data from FrontEnd
     // event id
     public record UpdateEventCommand (
             String title,
@@ -51,7 +48,4 @@ public class Commands {
             Set<String> hashTags,
             List<String> invitationEmails
     ){};
-
-
-
 }
