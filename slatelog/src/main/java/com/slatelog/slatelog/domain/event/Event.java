@@ -17,10 +17,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.*;
 
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static com.slatelog.slatelog.foundation.AssertUtil.*;
 import static com.slatelog.slatelog.foundation.EntityUtil.generateUUIDv4;
@@ -84,7 +81,19 @@ public class Event extends BaseEntity<String> {
         this.icsFileData = createIcsFileData();
     }
 
+
+
     private byte[] createIcsFileData() {
+
+
+        // TODO this is just a test needs rethinking and refactoring
+        //  we need to retrieve the invitation email on voting
+        //  this needs however to be done with the security token
+        //  there for we need a GET mapping for the secToken Link
+        //  however this is a bread crumb on how to retrieve deep data
+        //  however we are just calling it here so it gets executed on run
+        testCheckForInvitationEmailOnVoting();
+        // TODO /end
 
         Set<Instant> eventDates = getPoll().getPollOptions().keySet();
         List<Instant> instantList = new ArrayList<>();
@@ -138,6 +147,29 @@ public class Event extends BaseEntity<String> {
         }
         byte[] ics = icsContent.toString().getBytes();
         return ics;
+    }
+
+
+    // TODO
+    private void testCheckForInvitationEmailOnVoting() {
+        //System.out.println(getPoll().getPollOptions().values().stream().toString());
+        Collection<List<Answer>> answers = getPoll().getPollOptions().values();
+        assert getInvitations() != null;
+        List<Invitation> invitationList = getInvitations().stream().toList();
+        // Iterate over the outer collection
+        for (List<Answer> answerList : answers) {
+            // Iterate over each inner list
+            for (Answer answer : answerList) {
+                // Access individual Answer objects
+                // You can do something with 'answer' here
+                // System.out.println(answer.getVoterEmail());
+                for (Invitation inv : invitationList) {
+                    if (inv.getEmail().equals(answer.getVoterEmail())) {
+                        System.out.println(inv.getEmail() + " Match");
+                    }
+                }
+            }
+        }
     }
 
 

@@ -76,60 +76,7 @@ public class EventService {
         return eventRepository.getEventById(eventId);
     }
 
-    // Create Icalendar (*.ics) data
-    private byte[] createIcsFileData(Event event) {
-
-        Set<Instant> eventDates = event.getPoll().getPollOptions().keySet();
-        List<Instant> instantList = new ArrayList<>(eventDates);
-
-        LocalDateTime eventCreatedAt = LocalDateTime.now();
-        LocalDateTime eventEndTime = eventCreatedAt.plusHours(1);
-        String eventLocationState = event.getLocation().state();
-        String eventLocationCity = event.getLocation().city();
-        String eventLocationZip = event.getLocation().zipCode();
-        String eventLocationStreet = event.getLocation().street();
-        String eventLocation = eventLocationState + ", " + eventLocationCity + " " + eventLocationZip + ", " + eventLocationStreet;
-        String [] invitationEmails = event.getInvitations().stream()
-                .map(Invitation::getEmail)
-                .toArray(String[]::new);
-
-        // Format date-time according to iCalendar format
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss");
-
-        // Construct iCalendar data
-        StringBuilder icsContent = new StringBuilder();
-        icsContent.append("BEGIN:VCALENDAR\n");
-        icsContent.append("VERSION:2.0\n");
-
-        // Iterate over each Instant in the list
-        for (Instant startTime : instantList) {
-            // Calculate end time by adding one hour
-            Instant endTime = startTime.plus(Duration.ofHours(1));
-
-            // Convert Instant to ZonedDateTime with UTC time zone
-            ZonedDateTime startDateTime = ZonedDateTime.ofInstant(startTime, ZoneId.of("UTC"));
-            ZonedDateTime endDateTime = ZonedDateTime.ofInstant(endTime, ZoneId.of("UTC"));
-
-            // Format start and end times
-            String formattedStart = startDateTime.format(formatter);
-            String formattedEnd = endDateTime.format(formatter);
-
-            // Append event details to the icsContent StringBuilder
-            icsContent.append("BEGIN:VEVENT\n");
-            icsContent.append("DTSTART:").append(formattedStart).append("\n");
-            icsContent.append("DTEND:").append(formattedEnd).append("\n");
-            icsContent.append("SUMMARY:").append(event.getTitle()).append("\n");
-            icsContent.append("DESCRIPTION:").append(event.getDescription()).append("\n");
-            icsContent.append("LOCATION:").append(eventLocation).append("\n");
-            icsContent.append("ORGANIZER:").append(event.getUserId()).append("\n");
-            for (String attendee : invitationEmails) {
-                icsContent.append("ATTENDEE:").append(attendee).append("\n");
-            }
-            icsContent.append("END:VEVENT\n");
-        }
-        byte[] ics = icsContent.toString().getBytes();
-        return ics;
+    public List<Event> findAllEvents() {
+        return eventRepository.findAll();
     }
-
-
 }

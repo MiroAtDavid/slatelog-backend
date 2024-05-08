@@ -55,7 +55,6 @@ public class IcsCalendarService {
             FileWriter writer = new FileWriter(filePath);
             writer.write(icsContent.toString());
             writer.close();
-            System.out.println("ICS file generated successfully at: " + filePath);
         } catch (IOException e) {
             e.printStackTrace();
         }

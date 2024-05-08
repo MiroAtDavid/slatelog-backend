@@ -81,7 +81,7 @@ EventRepositoryTest {
         // Then
         assertThat(eventFound.isPresent(), is(true));
         assertThat(eventFound.get().getId(), equalTo(eventSaved.getId()));
-   }
+    }
 
     @Test
     public void findByTitle_shouldReturnEvent_whenEventExists() {
@@ -123,7 +123,7 @@ EventRepositoryTest {
         String eventLocation = eventLocationState + ", " + eventLocationCity + " " + eventLocationZip + ", " + eventLocationStreet;
 
         String [] invitationEmails = eventSaved.getInvitations().stream()
-                        .map(Invitation::getEmail)
+                .map(Invitation::getEmail)
                 .toArray(String[]::new);
         IcsCalendarService.generateICSFile(eventSaved.getTitle(), instantList,
                 eventSaved.getDescription(), eventLocation, UserFixture.EMAIL, invitationEmails,
