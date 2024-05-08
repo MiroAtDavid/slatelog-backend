@@ -8,6 +8,9 @@ import lombok.Setter;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Objects;
+
+import static com.slatelog.slatelog.foundation.AssertUtil.isNotNull;
 
 // Class representing an invitation to an event
 @Getter
@@ -25,19 +28,16 @@ public class Invitation {
 
     // Constructor to create an Invitation with an email and token
     public Invitation(String email, @Nullable Instant tokenExpirationDate) {
-        this.email = email;
+        this.email = isNotNull(email, "email");
         this.tokenExpirationDate = tokenExpirationDate;
-        // TODO !!! implement event poll voting endTime
-        setEmailToken(email);
+        generateInvitationToken(email, tokenExpirationDate);
     }
 
     // Default constructor (
     protected Invitation(){};
 
-
-    // TODO !!!
-    // The pollIsOpen boolean should be passed down from either the poll of the event
-    private void setEmailToken(String email) {
+    // Generating secToken for the invitations
+    private void generateInvitationToken(String email, Instant tokenExpirationDate) {
         if (tokenExpirationDate == null || tokenExpirationDate.isBefore(Instant.now())) {
             invitationToken = null;
         } else {
@@ -47,6 +47,18 @@ public class Invitation {
                     Instant.now().plus(durationUntilExpiration)
             );
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Invitation invitation = (Invitation) o;
+        return Objects.equals(email, invitation.email );
+    }
+
+    public int hashCode() {
+        return Objects.hash(email);
     }
 
 

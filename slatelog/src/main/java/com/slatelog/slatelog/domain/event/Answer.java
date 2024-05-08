@@ -1,5 +1,8 @@
 package com.slatelog.slatelog.domain.event;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.Instant;
 
 import static com.slatelog.slatelog.foundation.AssertUtil.isNotNull;
@@ -8,6 +11,8 @@ import static com.slatelog.slatelog.foundation.AssertUtil.isValidEmail;
 /**
  * Represents an answer to a poll from a voter.
  */
+@Getter
+@Setter
 public class Answer {
     private String voterEmail;
     private Instant votedAt;
@@ -28,4 +33,7 @@ public class Answer {
         this.votedAt = isNotNull(votedAt, "votedAt");
         this.voteOption = isNotNull(voteOption, "voteOption");
     }
+
+
+
 }

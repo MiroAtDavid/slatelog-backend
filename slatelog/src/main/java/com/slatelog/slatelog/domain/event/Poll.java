@@ -24,6 +24,7 @@ public class Poll {
     private boolean pollOpen;
 
     private Instant pollCloseDate;
+
     /**
      * Default constructor for Spring Data.
      */
@@ -36,10 +37,7 @@ public class Poll {
      */
     public Poll(HashMap<Instant, List<Answer>> pollOptions, Instant pollCloseDate) {
         this.pollOptions = isNotNull(pollOptions, "poll options");
-        setPollOpen(pollCloseDate);
-    }
-
-    public void setPollOpen(Instant pollCloseDate) {
+        this.pollCloseDate = isNotNull(pollCloseDate, "poll close date");
         this.pollOpen = pollCloseDate.isAfter(Instant.now());
     }
 }

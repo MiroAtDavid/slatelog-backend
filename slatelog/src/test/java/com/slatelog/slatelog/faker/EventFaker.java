@@ -60,18 +60,37 @@ public class EventFaker {
         VoteOption voteOption3 = VoteOption.Maybe;
 
         Answer answer = new Answer(email1, Instant.now(), voteOption1);
-        Answer answer2 = new Answer(email2, Instant.now(), voteOption2);
-        Answer answer3 = new Answer(email3, Instant.now(), voteOption3);
+        Answer answer2 = new Answer(email1, Instant.now(), voteOption2);
+        Answer answer3 = new Answer(email1, Instant.now(), voteOption3);
+
+        Answer answer4 = new Answer(email2, Instant.now(), voteOption2);
+        Answer answer5 = new Answer(email2, Instant.now(), voteOption3);
+        Answer answer6 = new Answer(email2, Instant.now(), voteOption1);
+
+        Answer answer7 = new Answer(email3, Instant.now(), voteOption3);
+        Answer answer8 = new Answer(email3, Instant.now(), voteOption2);
+        Answer answer9 = new Answer(email3, Instant.now(), voteOption1);
 
         List<Answer> answers = new ArrayList<>();
+        List<Answer> answers2 = new ArrayList<>();
+        List<Answer> answers3 = new ArrayList<>();
+
         answers.add(answer);
-        answers.add(answer2);
-        answers.add(answer3);
+        answers2.add(answer2);
+        answers3.add(answer3);
+
+        answers.add(answer4);
+        answers2.add(answer5);
+        answers3.add(answer6);
+
+        answers.add(answer7);
+        answers2.add(answer8);
+        answers3.add(answer9);
 
         HashMap<Instant, List<Answer>> instantanswersHashMap = new HashMap<>();
         instantanswersHashMap.put(eventDateOne, answers);
-        instantanswersHashMap.put(eventDateTwo, answers);
-        instantanswersHashMap.put(eventDateThree, answers);
+        instantanswersHashMap.put(eventDateTwo, answers2);
+        instantanswersHashMap.put(eventDateThree, answers3);
 
 
         // Create Invitation for the Event
@@ -90,7 +109,7 @@ public class EventFaker {
         invitations.add(inviteThree);
 
         // Create Medias
-        List<Media> medias = MediaFaker.createMedias(3);
+        List<Media> medias = MediaFaker.createMedias(1);
         var hashTags = fakeHashTags(NUM_HASH_TAGS);
 
         var event = new Event(userId, eventTitle, description, poll, eventAddress, invitations, medias, hashTags);

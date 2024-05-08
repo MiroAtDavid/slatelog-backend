@@ -1,51 +1,51 @@
 BEGIN:VCALENDAR
 VERSION:2.0
 BEGIN:VEVENT
-DTSTART:20240512T181300
-DTEND:20240512T191300
+DTSTART:20240512T184200
+DTEND:20240512T194200
 SUMMARY:Meeting
 DESCRIPTION:Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum
 LOCATION:Austria, Wien 1050, Spengergasse 7
 ORGANIZER:dav210957@spengergasse.at
-ATTENDEE:wenz@spengergasse.at
-ATTENDEE:dav210957@spengergasse.at
-ATTENDEE:wenz@spengergasse.at
-ATTENDEE:dav210957@spengergasse.at
 ATTENDEE:dav210957@spengergasse.at
 ATTENDEE:wenz@spengergasse.at
 ATTENDEE:dav210957@spengergasse.at
 ATTENDEE:wenz@spengergasse.at
+ATTENDEE:wenz@spengergasse.at
+ATTENDEE:wenz@spengergasse.at
+ATTENDEE:dav210957@spengergasse.at
+ATTENDEE:dav210957@spengergasse.at
 END:VEVENT
 BEGIN:VEVENT
-DTSTART:20240513T181300
-DTEND:20240513T191300
+DTSTART:20240513T184200
+DTEND:20240513T194200
 SUMMARY:Meeting
 DESCRIPTION:Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum
 LOCATION:Austria, Wien 1050, Spengergasse 7
 ORGANIZER:dav210957@spengergasse.at
-ATTENDEE:wenz@spengergasse.at
-ATTENDEE:dav210957@spengergasse.at
-ATTENDEE:wenz@spengergasse.at
-ATTENDEE:dav210957@spengergasse.at
 ATTENDEE:dav210957@spengergasse.at
 ATTENDEE:wenz@spengergasse.at
 ATTENDEE:dav210957@spengergasse.at
 ATTENDEE:wenz@spengergasse.at
+ATTENDEE:wenz@spengergasse.at
+ATTENDEE:wenz@spengergasse.at
+ATTENDEE:dav210957@spengergasse.at
+ATTENDEE:dav210957@spengergasse.at
 END:VEVENT
 BEGIN:VEVENT
-DTSTART:20240514T181300
-DTEND:20240514T191300
+DTSTART:20240514T184200
+DTEND:20240514T194200
 SUMMARY:Meeting
 DESCRIPTION:Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum
 LOCATION:Austria, Wien 1050, Spengergasse 7
 ORGANIZER:dav210957@spengergasse.at
-ATTENDEE:wenz@spengergasse.at
-ATTENDEE:dav210957@spengergasse.at
-ATTENDEE:wenz@spengergasse.at
-ATTENDEE:dav210957@spengergasse.at
 ATTENDEE:dav210957@spengergasse.at
 ATTENDEE:wenz@spengergasse.at
 ATTENDEE:dav210957@spengergasse.at
 ATTENDEE:wenz@spengergasse.at
+ATTENDEE:wenz@spengergasse.at
+ATTENDEE:wenz@spengergasse.at
+ATTENDEE:dav210957@spengergasse.at
+ATTENDEE:dav210957@spengergasse.at
 END:VEVENT
 END:VCALENDAR
