@@ -12,7 +12,9 @@ public interface EventRepository extends MongoRepository<Event, String> {
 
     Optional<Event> findByTitle(String title);
 
-    boolean existsByTitle(String title);
+    Event getEventById(String eventId);
+
+    //boolean existsByTitle(String title);
 
     List<Event> findByUserId(String userid);
 }

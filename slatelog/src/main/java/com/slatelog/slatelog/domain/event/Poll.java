@@ -1,6 +1,7 @@
 package com.slatelog.slatelog.domain.event;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.Instant;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import static com.slatelog.slatelog.foundation.AssertUtil.isNotNull;
  * Represents a poll associated with an event.
  * The poll consists of timestamps and corresponding lists of answers.
  */
+@Setter
 @Getter
 public class Poll {
     /**

@@ -1,5 +1,6 @@
 package com.slatelog.slatelog.presentation;
 
+import com.slatelog.slatelog.domain.event.Event;
 import com.slatelog.slatelog.presentation.commands.Commands;
 import com.slatelog.slatelog.presentation.commands.Commands.CreateEventCommand;
 import com.slatelog.slatelog.security.web.SecurityUser;
@@ -15,11 +16,9 @@ public class EventController {
 
     private final EventService eventService;
 
-    // TODO Why no constructor needed???
-
     @GetMapping("/{eventId}")
-    public void getEvent(String eventId) {
-        // TODO
+    public Event getEvent(@PathVariable String eventId) {
+        return eventService.getEventById(eventId);
     }
 
     @PostMapping

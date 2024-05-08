@@ -31,10 +31,11 @@ public class Invitation {
         this.email = isNotNull(email, "email");
         this.tokenExpirationDate = tokenExpirationDate;
         generateInvitationToken(email, tokenExpirationDate);
+        this.icsFileDataInvitee = generateIcsVotedFile();
     }
 
     // Default constructor (
-    protected Invitation(){};
+    protected Invitation(){}
 
     // Generating secToken for the invitations
     private void generateInvitationToken(String email, Instant tokenExpirationDate) {
@@ -47,6 +48,10 @@ public class Invitation {
                     Instant.now().plus(durationUntilExpiration)
             );
         }
+    }
+
+    public byte[] generateIcsVotedFile(){
+        return new byte[]{};
     }
 
     @Override

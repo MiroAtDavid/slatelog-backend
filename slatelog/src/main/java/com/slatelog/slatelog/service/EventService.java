@@ -71,6 +71,11 @@ public class EventService {
         eventRepository.save(event);
     }
 
+    // Method to retrieve an event by its ID
+    public Event getEventById(String eventId) {
+        return eventRepository.getEventById(eventId);
+    }
+
     // Create Icalendar (*.ics) data
     private byte[] createIcsFileData(Event event) {
 
@@ -125,4 +130,6 @@ public class EventService {
         byte[] ics = icsContent.toString().getBytes();
         return ics;
     }
+
+
 }

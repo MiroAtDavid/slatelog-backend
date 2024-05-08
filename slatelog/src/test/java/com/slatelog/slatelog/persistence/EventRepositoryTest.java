@@ -89,12 +89,24 @@ EventRepositoryTest {
         // @BeforeEach
 
         // When
-        Optional<Event> userFound = eventRepository.findByTitle(eventSaved.getTitle());
+        Optional<Event> eventFound = eventRepository.findByTitle(eventSaved.getTitle());
 
         // Then
-        assertThat(userFound.isPresent(), is(true));
-        assertThat(userFound.get().getTitle(), equalTo(eventSaved.getTitle()));
+        assertThat(eventFound.isPresent(), is(true));
+        assertThat(eventFound.get().getTitle(), equalTo(eventSaved.getTitle()));
     }
+
+    @Test
+    public void getEventById_shouldReturnEvent_whenEventExists() {
+
+        // When
+        Optional<Event> eventFound = Optional.ofNullable(eventRepository.getEventById(eventSaved.getId()));
+
+        // Then
+        assertThat(eventFound.isPresent(), is(true));
+        assertThat(eventFound.get().getId(), equalTo(eventFound.get().getId()));
+    }
+
     @Test
     public void createIcsFileFromEvent() {
 
