@@ -59,17 +59,25 @@ public class EventFaker {
         VoteOption voteOption2 = VoteOption.No;
         VoteOption voteOption3 = VoteOption.Maybe;
 
-        Answer answer = new Answer(email1, Instant.now(), voteOption1);
-        Answer answer2 = new Answer(email1, Instant.now(), voteOption2);
-        Answer answer3 = new Answer(email1, Instant.now(), voteOption3);
+        List<VoteOption> votesOptions = new ArrayList<>();
+        votesOptions.add(voteOption1);
+        votesOptions.add(voteOption2);
+        votesOptions.add(voteOption3);
 
-        Answer answer4 = new Answer(email2, Instant.now(), voteOption2);
-        Answer answer5 = new Answer(email2, Instant.now(), voteOption3);
-        Answer answer6 = new Answer(email2, Instant.now(), voteOption1);
+        Random r = new Random();
+        int i = r.nextInt(3);
 
-        Answer answer7 = new Answer(email3, Instant.now(), voteOption3);
-        Answer answer8 = new Answer(email3, Instant.now(), voteOption2);
-        Answer answer9 = new Answer(email3, Instant.now(), voteOption1);
+        Answer answer = new Answer(email1, Instant.now(), votesOptions.get(randomNumberGen()));
+        Answer answer2 = new Answer(email1, Instant.now(), votesOptions.get(randomNumberGen()));
+        Answer answer3 = new Answer(email1, Instant.now(), votesOptions.get(i));
+
+        Answer answer4 = new Answer(email2, Instant.now(), votesOptions.get(randomNumberGen()));
+        Answer answer5 = new Answer(email2, Instant.now(), votesOptions.get(randomNumberGen()));
+        Answer answer6 = new Answer(email2, Instant.now(), votesOptions.get(randomNumberGen()));
+
+        Answer answer7 = new Answer(email3, Instant.now(), votesOptions.get(randomNumberGen()));
+        Answer answer8 = new Answer(email3, Instant.now(), votesOptions.get(randomNumberGen()));
+        Answer answer9 = new Answer(email3, Instant.now(), votesOptions.get(randomNumberGen()));
 
         List<Answer> answers = new ArrayList<>();
         List<Answer> answers2 = new ArrayList<>();
@@ -121,6 +129,12 @@ public class EventFaker {
         return event;
     }
 
+
+    public static int randomNumberGen() {
+        Random r = new Random();
+        int i = r.nextInt(3);
+        return i;
+    }
 
     public static List<Event> createEvents(String userId, int n) {
         return Stream.generate(() -> createEvent(userId)).limit(n).toList();
