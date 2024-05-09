@@ -7,6 +7,8 @@ import com.slatelog.slatelog.persistance.EventRepository;
 import com.slatelog.slatelog.presentation.commands.Commands.CreateEventCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -57,7 +59,20 @@ public class EventService {
                 .map(email -> new Invitation(email, eventDeadLineVoting))
                 .collect(Collectors.toSet());
 
-        Set<HashTag> hashTags = Set.of();
+
+        // HashTag logic
+        List<String> extractedHashtags = extractHashtags(description);
+        Set<HashTag> hashTags = new HashSet<>(Set.of());
+
+        // Output the extracted hashtags
+        for (String hashtag : extractedHashtags) {
+            hashTags.add(new HashTag("#" + hashtag));
+        }
+
+        // Avoiding empty HashTag set, whilst showing it is possible
+        if (hashTags.isEmpty()) {
+            hashTags.add(new HashTag("#" + title));
+        }
 
         // Create the Event
         Event event = new Event(user.getId(), title, description, poll, location, invitations, null, hashTags);
@@ -78,5 +93,24 @@ public class EventService {
 
     public List<Event> findAllEvents() {
         return eventRepository.findAll();
+    }
+
+    // Helper Methods --------------------------------------------------------------------------------------------------
+
+    // We are extracting HashTags from the event description
+    public static List<String> extractHashtags(String text) {
+        List<String> hashtags = new ArrayList<>();
+
+        // Define the regular expression pattern to match hashtags
+        Pattern pattern = Pattern.compile("#(\\w+)");
+        Matcher matcher = pattern.matcher(text);
+
+        // Find all occurrences of hashtags in the text
+        while (matcher.find()) {
+            // Add the matched hashtag (group 1) to the list
+            hashtags.add(matcher.group(1));
+        }
+
+        return hashtags;
     }
 }
