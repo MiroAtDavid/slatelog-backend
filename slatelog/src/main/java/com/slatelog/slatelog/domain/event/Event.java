@@ -75,7 +75,7 @@ public class Event extends BaseEntity<String> {
         this.poll = isNotNull(poll, "poll");
         this.location = location;
         this.medias = hasMaxSizeOrNull(medias, 10, "medias");
-        this.hashTags = hasMaxSizeOrNull(hashTags, 10, "hashTags");
+        this.hashTags = hashTags;
         this.likes = new HashSet<>();
         this.invitations = invitations;
         this.icsFileData = createIcsFileData();

@@ -70,9 +70,9 @@ public class EventService {
         }
 
         // Avoiding empty HashTag set, whilst showing it is possible
-        if (hashTags.isEmpty()) {
-            hashTags.add(new HashTag("#" + title));
-        }
+        //if (hashTags.isEmpty()) {
+        //    hashTags.add(new HashTag("#" + title));
+        //}
 
         // Create the Event
         Event event = new Event(user.getId(), title, description, poll, location, invitations, null, hashTags);
