@@ -14,8 +14,6 @@ public class FakeDataLoaderRunner {
         // try with resources -> close the context after the block
         try (var context = SpringApplication.run(SlatelogApplication.class, args)) {
             var faker = context.getBean(FakeDataLoader.class);
-
-            // TODO Challenge: Load it from the command line
             faker.loadFakeData(FAKED_USERS, FAKED_EVENTS);
         }
     }

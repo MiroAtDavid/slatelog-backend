@@ -29,8 +29,7 @@ public class PollController {
     ) {
         // EventId and emailToken directly from the URL
         // Perform token validation
-        if (tokenQueryService.CheckForValidToken(eventId, emailToken))
-            //return ResponseEntity.ok().build();
+        if (tokenQueryService.checkForValidToken(eventId, emailToken))
             return pollService.getVoting(eventId);
         else
             return null;
@@ -44,7 +43,7 @@ public class PollController {
     ) {
         // EventId and emailToken directly from the URL
         // Perform token validation
-        if (tokenQueryService.CheckForValidToken(eventId, emailToken)) {
+        if (tokenQueryService.checkForValidToken(eventId, emailToken)) {
             pollService.updateEventVoting(eventId, emailToken, command);
         }
     }

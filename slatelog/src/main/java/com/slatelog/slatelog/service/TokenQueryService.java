@@ -15,7 +15,7 @@ public class TokenQueryService {
 
     private final EventRepository eventRepository;
 
-    public boolean CheckForValidToken(String eventId, String token){
+    public boolean checkForValidToken(String eventId, String token){
         for (Invitation invitation : Objects.requireNonNull(eventRepository.getEventById(eventId).getInvitations())) {
             assert invitation.getInvitationToken() != null;
             String invitationToken = invitation.getInvitationToken().getEncodedValue().toString().trim();
@@ -26,7 +26,7 @@ public class TokenQueryService {
         return false;
     }
 
-    public String CheckForValidVoterEmail(String eventId, String token){
+    public String checkForValidVoterEmail(String eventId, String token){
         for (Invitation invitation : Objects.requireNonNull(eventRepository.getEventById(eventId).getInvitations())) {
             assert invitation.getInvitationToken() != null;
             String invitationToken = invitation.getInvitationToken().getEncodedValue().toString().trim();
@@ -36,6 +36,18 @@ public class TokenQueryService {
             }
         }
         return "false";
+    }
+
+    public Invitation checkForInvitation(String eventId, String token){
+        for (Invitation invitation : Objects.requireNonNull(eventRepository.getEventById(eventId).getInvitations())) {
+            assert invitation.getInvitationToken() != null;
+            String invitationToken = invitation.getInvitationToken().getEncodedValue().toString().trim();
+            String inputToken = token.trim();
+            if (invitationToken.equals(inputToken)) {
+                return invitation;
+            }
+        }
+        return null;
     }
 
 }

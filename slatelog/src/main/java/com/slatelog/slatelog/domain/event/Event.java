@@ -117,6 +117,7 @@ public class Event extends BaseEntity<String> {
         // Iterate over each Instant in the list
         for (Instant startTime : instantList) {
             // Calculate end time by adding one hour
+            // TODO duration of the event
             Instant endTime = startTime.plus(Duration.ofHours(1));
 
             // Convert Instant to ZonedDateTime with UTC time zone

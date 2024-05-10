@@ -23,7 +23,7 @@ public class Invitation {
     private @Nullable Token invitationToken;
     // Event invitation voting end date
     private @Nullable Instant tokenExpirationDate;
-    // TODO !!! We need to get this from the poll
+    // TODO !!! We need to get ics file data from the poll for the invitation
     private byte[] icsFileDataInvitee;
 
     // Constructor to create an Invitation with an email and token
