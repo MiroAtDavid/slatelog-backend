@@ -66,6 +66,9 @@ public class PollService {
         eventRepository.save(event);
     }
 
+    // TODO see above - send mail to invitee that has voted
+    // Helper to create the ics file data for the invitee, however maybe refactoring to place both ics_s at a better place
+    // One is directly in the event domain class for the event creator and for now, this one remains here
     private byte[] createInviteeIcsFileData(Event event, List<Instant> eventTimes) {
         List<Instant> instantList = new ArrayList<>();
         instantList.addAll(eventTimes);
