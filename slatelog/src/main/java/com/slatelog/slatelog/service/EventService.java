@@ -4,7 +4,6 @@ import com.slatelog.slatelog.domain.address.Address;
 import com.slatelog.slatelog.domain.event.*;
 import com.slatelog.slatelog.domain.user.User;
 import com.slatelog.slatelog.persistance.EventRepository;
-import com.slatelog.slatelog.persistance.UserRepository;
 import com.slatelog.slatelog.presentation.commands.Commands.CreateEventCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,7 @@ import java.util.stream.Collectors;
 public class EventService {
 
     private final EventRepository eventRepository;
-    private final UserRepository userRepository;
+
 
     public void createEvent(User user, CreateEventCommand command){
 

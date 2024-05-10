@@ -118,10 +118,9 @@ public class WebSecurityConfig {
         http.authorizeHttpRequests(
                 (authorize) ->
                         authorize
-                                .requestMatchers("/api/registration/**")
-                                .permitAll()
-                                .requestMatchers("/api/user/**")
-                                .hasRole(Role.USER.toString())
+                                .requestMatchers("/api/registration/**").permitAll()
+                                .requestMatchers("/api/user/**").hasRole(Role.USER.toString())
+                                .requestMatchers("/api/event/poll").permitAll()
                                 .anyRequest()
                                 .authenticated());
 

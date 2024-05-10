@@ -34,7 +34,7 @@ public class Commands {
 
     // Received Data from FrontEnd
     // event id
-    public record UpdateEventCommand (
+    public record UpdateEventVoting (
             String title,
             String description,
             List<String> pollOptions,
