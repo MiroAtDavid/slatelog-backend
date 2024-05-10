@@ -1,6 +1,7 @@
 package com.slatelog.slatelog.presentation;
 
 
+import com.slatelog.slatelog.domain.user.Profile;
 import com.slatelog.slatelog.presentation.views.Views;
 import com.slatelog.slatelog.security.web.SecurityUser;
 import com.slatelog.slatelog.service.UserService;
@@ -24,5 +25,10 @@ public class UserController {
     public Views.LoginView login(@AuthenticationPrincipal SecurityUser principal) {
         LOGGER.debug("User contoller#login {}", principal);
         return userService.login(principal.getUser());
+    }
+
+    @GetMapping("/profile")
+    public Profile getProfile(@AuthenticationPrincipal SecurityUser principal) {
+        return userService.getUserProfile(principal.getUser());
     }
 }

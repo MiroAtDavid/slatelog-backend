@@ -1,5 +1,6 @@
 package com.slatelog.slatelog.service;
 
+import com.slatelog.slatelog.domain.user.Profile;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,5 +36,9 @@ public class UserService {
         LoginView loginView = mapper.toLoginView(user, events);
         LOGGER.debug("User login sucessfull {}", loginView);
         return loginView;
+    }
+
+    public Profile getUserProfile(User user) {
+        return user.getProfile();
     }
 }
