@@ -25,4 +25,17 @@ public class TokenQueryService {
         }
         return false;
     }
+
+    public String CheckForValidVoterEmail(String eventId, String token){
+        for (Invitation invitation : Objects.requireNonNull(eventRepository.getEventById(eventId).getInvitations())) {
+            assert invitation.getInvitationToken() != null;
+            String invitationToken = invitation.getInvitationToken().getEncodedValue().toString().trim();
+            String inputToken = token.trim();
+            if (invitationToken.equals(inputToken)) {
+                return invitation.getEmail();
+            }
+        }
+        return "false";
+    }
+
 }
