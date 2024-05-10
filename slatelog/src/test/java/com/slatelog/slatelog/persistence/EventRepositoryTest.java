@@ -5,9 +5,11 @@ package com.slatelog.slatelog.persistence;
 import com.slatelog.slatelog.config.MongoConfig;
 import com.slatelog.slatelog.domain.event.Event;
 import com.slatelog.slatelog.domain.event.Invitation;
+import com.slatelog.slatelog.domain.user.User;
 import com.slatelog.slatelog.fixture.EventFixture;
 import com.slatelog.slatelog.fixture.UserFixture;
 import com.slatelog.slatelog.persistance.EventRepository;
+import com.slatelog.slatelog.persistance.UserRepository;
 import com.slatelog.slatelog.service.IcsCalendarService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,11 +36,14 @@ EventRepositoryTest {
     @Autowired
     private EventRepository eventRepository;
 
+
+
     private Event eventSaved;
 
     @BeforeEach
     public void setup(){
         var event = EventFixture.createEvent();
+
         eventRepository.deleteAll();
         eventSaved = eventRepository.save(event);
     }
@@ -105,6 +110,10 @@ EventRepositoryTest {
         // Then
         assertThat(eventFound.isPresent(), is(true));
         assertThat(eventFound.get().getId(), equalTo(eventFound.get().getId()));
+    }
+
+    public void getEventsByUserId_shouldReturnEvents_WhenUserHasEvents(){
+
     }
 
     @Test

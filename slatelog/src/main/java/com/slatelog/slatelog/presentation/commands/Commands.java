@@ -15,7 +15,7 @@ public class Commands {
 
     // --- Verification ---
     public record UserVerificationCommand(String userId, String tokenId) {}
-    ;
+
     // Received Data from FrontEnd
     public record CreateEventCommand (
             String title,
@@ -30,7 +30,7 @@ public class Commands {
             Set<String> likes,
             Set<String> hashTags,
             List<String> invitationEmails
-    ){};
+    ){}
 
     // Received Data from FrontEnd
     // event id
@@ -47,5 +47,5 @@ public class Commands {
             Set<String> likes,
             Set<String> hashTags,
             List<String> invitationEmails
-    ){};
+    ){}
 }

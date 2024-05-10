@@ -8,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/event")
 @RequiredArgsConstructor
@@ -22,13 +20,10 @@ public class EventController {
         eventService.createEvent(principal.getUser(), command);
     }
 
-    @GetMapping
-    public List<Event> findAllEvents() {
-        return eventService.findAllEvents();
+    @GetMapping("/eventId")
+    public Event getEvent(@AuthenticationPrincipal SecurityUser principal, @PathVariable String eventId) {
+        return eventService.getEventByIdAndUser(principal.getUser(), eventId);
     }
 
-    @GetMapping("/{eventId}")
-    public Event getEvent(@PathVariable String eventId) {
-        return eventService.getEventById(eventId);
-    }
+
 }

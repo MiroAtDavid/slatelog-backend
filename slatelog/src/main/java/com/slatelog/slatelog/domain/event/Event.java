@@ -13,7 +13,6 @@ import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.time.*;
 
 import java.time.format.DateTimeFormatter;
@@ -81,15 +80,11 @@ public class Event extends BaseEntity<String> {
         this.icsFileData = createIcsFileData();
     }
 
-
-
     private byte[] createIcsFileData() {
-
-
         // TODO this is just a test needs rethinking and refactoring
         //  we need to retrieve the invitation email on voting
         //  this needs however to be done with the security token
-        //  there for we need a GET mapping for the secToken Link
+        //  therefor we need a REST mapping for the secToken Link
         //  however this is a bread crumb on how to retrieve deep data
         //  however we are just calling it here so it gets executed on run
         testCheckForInvitationEmailOnVoting();
@@ -149,7 +144,6 @@ public class Event extends BaseEntity<String> {
         return ics;
     }
 
-
     // TODO
     private void testCheckForInvitationEmailOnVoting() {
         //System.out.println(getPoll().getPollOptions().values().stream().toString());
@@ -171,9 +165,6 @@ public class Event extends BaseEntity<String> {
             }
         }
     }
-
-
-
 }
 
 

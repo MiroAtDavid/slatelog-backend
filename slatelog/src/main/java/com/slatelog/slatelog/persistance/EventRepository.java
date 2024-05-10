@@ -1,6 +1,7 @@
 package com.slatelog.slatelog.persistance;
 
 import com.slatelog.slatelog.domain.event.Event;
+import com.slatelog.slatelog.service.UserQueryService;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,8 +14,6 @@ public interface EventRepository extends MongoRepository<Event, String> {
     Optional<Event> findByTitle(String title);
 
     Event getEventById(String eventId);
-
-    //boolean existsByTitle(String title);
 
     List<Event> findByUserId(String userid);
 }

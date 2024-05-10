@@ -4,6 +4,7 @@ import com.slatelog.slatelog.domain.address.Address;
 import com.slatelog.slatelog.domain.event.*;
 import com.slatelog.slatelog.domain.user.User;
 import com.slatelog.slatelog.persistance.EventRepository;
+import com.slatelog.slatelog.persistance.UserRepository;
 import com.slatelog.slatelog.presentation.commands.Commands.CreateEventCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import java.time.*;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -20,31 +20,19 @@ import java.util.stream.Collectors;
 public class EventService {
 
     private final EventRepository eventRepository;
+    private final UserRepository userRepository;
 
     public void createEvent(User user, CreateEventCommand command){
-        String title = command.title();
-        String state = command.locationState();
-        String city = command.locationCity();
-        String street = command.locationStreet();
-        String zipcode = command.locationZipCode();
-        String deadlineDate = command.deadlineDate();
-        String deadlineTime = command.deadlineTime();
-        String description = command.description();
-        List<String> emails = command.invitationEmails();
-        List<String> dateTimes = command.pollOptions();
 
         // Combine deadlineDate and deadlineTime into LocalDateTime
-        LocalDateTime eventDateTime = LocalDateTime.parse(deadlineDate + "T" + deadlineTime);
-
-        // TODO - implementation - Convert LocalDateTime to Instant
+        LocalDateTime eventDateTime = LocalDateTime.parse(command.deadlineDate() + "T" + command.deadlineTime());
         Instant eventDeadLineVoting = eventDateTime.toInstant(ZoneOffset.UTC);
-        VoteOption voteOption;
+
         // Create poll options
         HashMap<Instant, List<Answer>> pollOptions = new HashMap<>();
-        for (String dateTime : dateTimes) {
+        for (String dateTime : command.pollOptions()) {
             // Parse each string to Instant
             Instant instant = Instant.parse(dateTime);
-
             // Associate an empty list of Answers with the Instant key
             pollOptions.put(instant, new ArrayList<>());
         }
@@ -52,31 +40,23 @@ public class EventService {
         Poll poll = new Poll(pollOptions, eventDeadLineVoting);
 
         // Create Address object
-        Address location = new Address(street, city, state, zipcode);
+        Address location = new Address(command.locationStreet(), command.locationCity(), command.locationState(), command.locationZipCode());
 
         // Create Invitation object
-        Set<Invitation> invitations = emails.stream()
+        Set<Invitation> invitations = command.invitationEmails().stream()
                 .map(email -> new Invitation(email, eventDeadLineVoting))
                 .collect(Collectors.toSet());
 
-
         // HashTag logic
-        List<String> extractedHashtags = extractHashtags(description);
+        List<String> extractedHashtags = extractHashtags(command.description());
         Set<HashTag> hashTags = new HashSet<>(Set.of());
-
         // Output the extracted hashtags
         for (String hashtag : extractedHashtags) {
-            hashTags.add(new HashTag("#" + hashtag));
+            hashTags.add(new HashTag(hashtag));
         }
 
-        // Avoiding empty HashTag set, whilst showing it is possible
-        //if (hashTags.isEmpty()) {
-        //    hashTags.add(new HashTag("#" + title));
-        //}
-
         // Create the Event
-        Event event = new Event(user.getId(), title, description, poll, location, invitations, null, hashTags);
-        // event.setIcsFileData(createIcsFileData(event)); //TODO check what's the smarter way to implement
+        Event event = new Event(user.getId(), command.title(), command.description(), poll, location, invitations, null, hashTags);
         // Save Event
         saveEvent(event);
     }
@@ -91,14 +71,25 @@ public class EventService {
         return eventRepository.getEventById(eventId);
     }
 
+    public Event getEventByIdAndUser(User user, String eventId){
+        Event event = eventRepository.getEventById(eventId);
+        if (event.getUserId().equals(user.getId()))
+            return event;
+        return null;
+    }
+
     public List<Event> findAllEvents() {
         return eventRepository.findAll();
+    }
+
+    public List<Event> findAllUserEvents(String userId){
+        return eventRepository.findByUserId(userId);
     }
 
     // Helper Methods --------------------------------------------------------------------------------------------------
 
     // We are extracting HashTags from the event description
-    public static List<String> extractHashtags(String text) {
+    private static List<String> extractHashtags(String text) {
         List<String> hashtags = new ArrayList<>();
 
         // Define the regular expression pattern to match hashtags
@@ -110,7 +101,6 @@ public class EventService {
             // Add the matched hashtag (group 1) to the list
             hashtags.add(matcher.group(1));
         }
-
         return hashtags;
     }
 }
