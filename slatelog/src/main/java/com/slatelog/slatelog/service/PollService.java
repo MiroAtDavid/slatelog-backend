@@ -36,8 +36,6 @@ public class PollService {
         // Let's get the votes from the command DTO
         List<HashMap<Instant, String>> votes = command.votes();
 
-        // TODO check for double email in votes
-        // TODO create ics file for voter and send mail
         // Bloody magic adds answers to a simple poll
         for (Instant instant : event.getPoll().getPollOptions().keySet()) {
             for (HashMap<Instant, String> map : votes){
@@ -46,10 +44,13 @@ public class PollService {
                     List<Answer> answers = event.getPoll().getPollOptions().values().stream()
                             .flatMap(List::stream)
                             .collect(Collectors.toList());
+                    answers.removeIf(answer -> answer.getVoterEmail().equals(voterEmail));
                     answers.add(vote);
                 }
             }
         }
+        // TODO create ics file for voter and send mail
+
         // Finally save event with updated poll
         eventRepository.save(event);
     }
