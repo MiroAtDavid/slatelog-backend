@@ -7,6 +7,7 @@ import com.slatelog.slatelog.domain.event.VoteOption;
 import com.slatelog.slatelog.persistance.EventRepository;
 import com.slatelog.slatelog.presentation.commands.Commands;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.*;
@@ -123,4 +124,22 @@ public class PollService {
         byte[] ics = icsContent.toString().getBytes();
         return ics;
     }
+
+    // TODO setting up event closed notification
+    // the event needs a boolean value isNotified
+    // check out @CompundIndex first value should be isNotified second index isClosed
+    //@Scheduled(cron = "0 */1 * ? * *")
+    /*
+    public void closeVoting() throws InterruptedException {
+        for (Event event : eventRepository.findAll()) {
+            if (!event.getPoll().isPollOpen()) {
+                System.out.println("Poll closes at: ");
+                System.out.println(event.getPoll().getPollCloseDate().toString());
+            } else {
+                System.out.println("Poll is open, closes at:");
+                System.out.println(event.getPoll().getPollCloseDate().toString());
+            }
+        }
+    }
+    */
 }

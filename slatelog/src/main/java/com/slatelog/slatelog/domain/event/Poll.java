@@ -1,7 +1,10 @@
 package com.slatelog.slatelog.domain.event;
 
+import ch.qos.logback.classic.model.processor.LoggerModelHandler;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.HashMap;

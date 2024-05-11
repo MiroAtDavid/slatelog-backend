@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Import;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -136,8 +137,7 @@ EventRepositoryTest {
                 .toArray(String[]::new);
         IcsCalendarService.generateICSFile(eventSaved.getTitle(), instantList,
                 eventSaved.getDescription(), eventLocation, UserFixture.EMAIL, invitationEmails,
-                "myicsfile1.ics");
-
+                eventSaved.getTitle() + "_" + eventSaved.getCreatedAt().truncatedTo(ChronoUnit.MINUTES) + ".ics");
 
     }
 }

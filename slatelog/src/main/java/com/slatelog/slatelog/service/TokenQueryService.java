@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 
+import static com.mongodb.internal.HexUtils.toHex;
+
 @Service
 @RequiredArgsConstructor
 public class TokenQueryService {
@@ -16,10 +18,11 @@ public class TokenQueryService {
     private final EventRepository eventRepository;
 
     public boolean checkForValidToken(String eventId, String token){
+        System.out.println("we are in the tokenQuery");
         for (Invitation invitation : Objects.requireNonNull(eventRepository.getEventById(eventId).getInvitations())) {
             assert invitation.getInvitationToken() != null;
             String invitationToken = invitation.getInvitationToken().getEncodedValue().toString().trim();
-            String inputToken = token.trim();
+            String inputToken = token.trim().replace(" ", "+");
             if (invitationToken.equals(inputToken))
                 return true;
         }
@@ -29,8 +32,8 @@ public class TokenQueryService {
     public String checkForValidVoterEmail(String eventId, String token){
         for (Invitation invitation : Objects.requireNonNull(eventRepository.getEventById(eventId).getInvitations())) {
             assert invitation.getInvitationToken() != null;
-            String invitationToken = invitation.getInvitationToken().getEncodedValue().toString().trim();
-            String inputToken = token.trim();
+            String invitationToken = invitation.getInvitationToken().getEncodedValue();
+            String inputToken = token.replace(" ", "+");
             if (invitationToken.equals(inputToken)) {
                 return invitation.getEmail();
             }
@@ -41,8 +44,8 @@ public class TokenQueryService {
     public Invitation checkForInvitation(String eventId, String token){
         for (Invitation invitation : Objects.requireNonNull(eventRepository.getEventById(eventId).getInvitations())) {
             assert invitation.getInvitationToken() != null;
-            String invitationToken = invitation.getInvitationToken().getEncodedValue().toString().trim();
-            String inputToken = token.trim();
+            String invitationToken = invitation.getInvitationToken().getEncodedValue();
+            String inputToken = token.replace(" ", "+");
             if (invitationToken.equals(inputToken)) {
                 return invitation;
             }

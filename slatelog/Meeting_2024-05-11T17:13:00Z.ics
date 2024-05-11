@@ -1,51 +1,33 @@
 BEGIN:VCALENDAR
 VERSION:2.0
 BEGIN:VEVENT
-DTSTART:20240512T184200
-DTEND:20240512T194200
+DTSTART:20240518T171300
+DTEND:20240518T181300
 SUMMARY:Meeting
 DESCRIPTION:Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum
 LOCATION:Austria, Wien 1050, Spengergasse 7
 ORGANIZER:dav210957@spengergasse.at
 ATTENDEE:dav210957@spengergasse.at
 ATTENDEE:wenz@spengergasse.at
-ATTENDEE:dav210957@spengergasse.at
-ATTENDEE:wenz@spengergasse.at
-ATTENDEE:wenz@spengergasse.at
-ATTENDEE:wenz@spengergasse.at
-ATTENDEE:dav210957@spengergasse.at
-ATTENDEE:dav210957@spengergasse.at
 END:VEVENT
 BEGIN:VEVENT
-DTSTART:20240513T184200
-DTEND:20240513T194200
+DTSTART:20240516T171300
+DTEND:20240516T181300
 SUMMARY:Meeting
 DESCRIPTION:Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum
 LOCATION:Austria, Wien 1050, Spengergasse 7
 ORGANIZER:dav210957@spengergasse.at
 ATTENDEE:dav210957@spengergasse.at
 ATTENDEE:wenz@spengergasse.at
-ATTENDEE:dav210957@spengergasse.at
-ATTENDEE:wenz@spengergasse.at
-ATTENDEE:wenz@spengergasse.at
-ATTENDEE:wenz@spengergasse.at
-ATTENDEE:dav210957@spengergasse.at
-ATTENDEE:dav210957@spengergasse.at
 END:VEVENT
 BEGIN:VEVENT
-DTSTART:20240514T184200
-DTEND:20240514T194200
+DTSTART:20240517T171300
+DTEND:20240517T181300
 SUMMARY:Meeting
 DESCRIPTION:Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum
 LOCATION:Austria, Wien 1050, Spengergasse 7
 ORGANIZER:dav210957@spengergasse.at
 ATTENDEE:dav210957@spengergasse.at
 ATTENDEE:wenz@spengergasse.at
-ATTENDEE:dav210957@spengergasse.at
-ATTENDEE:wenz@spengergasse.at
-ATTENDEE:wenz@spengergasse.at
-ATTENDEE:wenz@spengergasse.at
-ATTENDEE:dav210957@spengergasse.at
-ATTENDEE:dav210957@spengergasse.at
 END:VEVENT
 END:VCALENDAR
