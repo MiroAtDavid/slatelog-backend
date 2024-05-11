@@ -4,7 +4,10 @@ import com.slatelog.slatelog.domain.event.Answer;
 import com.slatelog.slatelog.domain.event.Event;
 import com.slatelog.slatelog.domain.event.Invitation;
 import com.slatelog.slatelog.domain.event.VoteOption;
+import com.slatelog.slatelog.domain.user.User;
+import com.slatelog.slatelog.email.EmailPollClosedService;
 import com.slatelog.slatelog.persistance.EventRepository;
+import com.slatelog.slatelog.persistance.UserRepository;
 import com.slatelog.slatelog.presentation.commands.Commands;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -21,6 +24,8 @@ public class PollService {
 
     private final EventRepository eventRepository;
     private final TokenQueryService tokenQueryService;
+    private final EmailPollClosedService emailPollClosedService;
+    private final UserRepository userRepository;
 
     public Event getVoting(String eventId){
         return eventRepository.getEventById(eventId);
@@ -127,19 +132,24 @@ public class PollService {
 
     // TODO setting up event closed notification
     // the event needs a boolean value isNotified
-    // check out @CompundIndex first value should be isNotified second index isClosed
-    //@Scheduled(cron = "0 */1 * ? * *")
-    /*
+    // check out @CompundIndex first value should  be isNotified second index isClosed
+    // "0 0 * ? * *" = hourly
+    @Scheduled(cron = "0 */1 * ? * *")
     public void closeVoting() throws InterruptedException {
-        for (Event event : eventRepository.findAll()) {
-            if (!event.getPoll().isPollOpen()) {
-                System.out.println("Poll closes at: ");
+        for (Event event : eventRepository.findByMailSent(false)) {
+            if (event.getPoll().isPollOpen()) {
+                // TODO here we need to send the mail
+                 emailPollClosedService.sendPollClosedEmail(event);
+                // TODO once the mail is sent event.isMailSent has to be set to (true)
+                // TODO emails go out, however the logic is not correct !!!!!!! urgent review
+                System.out.println(Instant.now().toString());
+                System.out.println("Poll closed at: ");
                 System.out.println(event.getPoll().getPollCloseDate().toString());
+                event.setMailSent(true);
             } else {
                 System.out.println("Poll is open, closes at:");
                 System.out.println(event.getPoll().getPollCloseDate().toString());
             }
         }
     }
-    */
 }

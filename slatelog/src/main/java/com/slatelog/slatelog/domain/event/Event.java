@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.annotation.PersistenceCreator;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -42,6 +43,7 @@ public class Event extends BaseEntity<String> {
     private Set<Like> likes;
     private Instant votingDeadLine;
     private byte[] icsFileData;
+    private boolean mailSent = false;
 
     /**
      * Default constructor for Spring Data.
@@ -78,6 +80,7 @@ public class Event extends BaseEntity<String> {
         this.likes = new HashSet<>();
         this.invitations = invitations;
         this.icsFileData = createIcsFileData();
+        this.mailSent = isMailSent();
     }
 
     private byte[] createIcsFileData() {
