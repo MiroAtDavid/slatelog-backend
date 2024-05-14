@@ -1,9 +1,6 @@
 package com.slatelog.slatelog.service;
 
-import com.slatelog.slatelog.domain.event.Answer;
-import com.slatelog.slatelog.domain.event.Event;
-import com.slatelog.slatelog.domain.event.Invitation;
-import com.slatelog.slatelog.domain.event.VoteOption;
+import com.slatelog.slatelog.domain.event.*;
 import com.slatelog.slatelog.domain.user.User;
 import com.slatelog.slatelog.email.EmailPollClosedService;
 import com.slatelog.slatelog.persistance.EventRepository;
@@ -54,22 +51,32 @@ public class PollService {
                     if (vote.getVoteOption().equals(yes))
                         positiveVotes.add(instant);
                     // Continue on with service logic
-                    List<Answer> answers = event.getPoll().getPollOptions().values().stream()
-                            .flatMap(List::stream)
-                            .collect(Collectors.toList());
-                    answers.removeIf(answer -> answer.getVoterEmail().equals(voterEmail));
-                    answers.add(vote);
+                    Poll poll = event.getPoll();
+
+                    // TODO refactor nicely
+                    // TODO double entries check, does evnetuall ynot work properly
+                    poll.getPollOptions().get(instant).removeIf(v -> v.getVoterEmail().equals(voterEmail));
+                    poll.getPollOptions().get(instant).add(vote);
+                   // List<Answer> answers = event.getPoll().getPollOptions().values().stream()
+                    //        .flatMap(List::stream)
+                   //         .collect(Collectors.toList());
+                   // answers.removeIf(answer -> answer.getVoterEmail().equals(voterEmail));
+                  //  answers.add(vote);
                 }
             }
         }
 
         // Create ics file for voter and send mail
         Invitation invitation = tokenQueryService.checkForInvitation(eventId, emailToken);
-        invitation.setIcsFileDataInvitee(createInviteeIcsFileData(event, positiveVotes));
+        // invitation.setIcsFileDataInvitee(createInviteeIcsFileData(event, positiveVotes));
         // TODO send mail
 
         // Finally save event with updated poll
-        eventRepository.save(event);
+        try {
+            eventRepository.save(event);
+        } catch (Exception e) {
+            e.printStackTrace(); // This prints the stack trace to the standard error stream
+        }
     }
 
     // TODO see above - send mail to invitee that has voted
