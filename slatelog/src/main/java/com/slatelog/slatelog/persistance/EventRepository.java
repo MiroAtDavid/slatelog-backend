@@ -17,6 +17,8 @@ public interface EventRepository extends MongoRepository<Event, String> {
 
     List<Event> findByUserId(String userid);
 
-    List<Event> findByMailSent(boolean mailSent);
+    // List<Event> findByMailSent(boolean mailSent);
+
+    List<Event> findEventsByMailSentFalse();
 
 }

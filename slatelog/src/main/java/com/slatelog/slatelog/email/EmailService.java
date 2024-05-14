@@ -42,7 +42,7 @@ public class EmailService {
     private String domain;
 
     // The port of the server where the application is running.
-    @Value("8080")
+    @Value("4200")
     private String port;
 
     // The verification link that is sent to the user which he has to click to verify his email.

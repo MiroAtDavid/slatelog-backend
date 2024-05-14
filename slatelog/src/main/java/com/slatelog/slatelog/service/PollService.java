@@ -9,6 +9,7 @@ import com.slatelog.slatelog.presentation.commands.Commands;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -31,13 +32,10 @@ public class PollService {
     public void updateEventVoting(String eventId, String emailToken, Commands.UpdateEventVoting command) {
         // Make sure event is there
         Event event = eventRepository.getEventById(eventId);
-
         // Assert there is an associated invitee email with the secToken and retrieve it
         String voterEmail = tokenQueryService.checkForValidVoterEmail(eventId, emailToken);
-
         // Let's get the votes from the command DTO
         List<HashMap<Instant, String>> votes = command.votes();
-
         // Create a list which will contain the positive votes for the ics file
         List<Instant> positiveVotes = new ArrayList<>();
         VoteOption yes = VoteOption.Yes;
@@ -52,41 +50,26 @@ public class PollService {
                         positiveVotes.add(instant);
                     // Continue on with service logic
                     Poll poll = event.getPoll();
-
-                    // TODO refactor nicely
-                    // TODO double entries check, does evnetuall ynot work properly
                     poll.getPollOptions().get(instant).removeIf(v -> v.getVoterEmail().equals(voterEmail));
                     poll.getPollOptions().get(instant).add(vote);
-                   // List<Answer> answers = event.getPoll().getPollOptions().values().stream()
-                    //        .flatMap(List::stream)
-                   //         .collect(Collectors.toList());
-                   // answers.removeIf(answer -> answer.getVoterEmail().equals(voterEmail));
-                  //  answers.add(vote);
                 }
             }
         }
-
         // Create ics file for voter and send mail
         Invitation invitation = tokenQueryService.checkForInvitation(eventId, emailToken);
-        // invitation.setIcsFileDataInvitee(createInviteeIcsFileData(event, positiveVotes));
-        // TODO send mail
-
+        invitation.setIcsFileDataInvitee(createInviteeIcsFileData(event, positiveVotes));
+        // TODO invitee file is not being created yet
         // Finally save event with updated poll
-        try {
-            eventRepository.save(event);
-        } catch (Exception e) {
-            e.printStackTrace(); // This prints the stack trace to the standard error stream
-        }
+        eventRepository.save(event);
+
     }
 
-    // TODO see above - send mail to invitee that has voted
-    // Helper to create the ics file data for the invitee, however maybe refactoring to place both ics_s at a better place
-    // One is directly in the event domain class for the event creator and for now, this one remains here
+    // Helper to create the ics file data for the invitee
     private byte[] createInviteeIcsFileData(Event event, List<Instant> eventTimes) {
         List<Instant> instantList = new ArrayList<>();
         instantList.addAll(eventTimes);
 
-        LocalDateTime eventCreatedAt = LocalDateTime.parse(event.getCreatedAt().toString());
+        LocalDateTime eventCreatedAt = LocalDateTime.parse(event.getCreatedAt().toString().substring(0, event.getCreatedAt().toString().length() - 1));
         LocalDateTime eventEndTime = eventCreatedAt.plusHours(1);
         String eventLocationState = event.getLocation().state().toString();
         String eventLocationCity = event.getLocation().city().toString();
@@ -143,19 +126,20 @@ public class PollService {
     // "0 0 * ? * *" = hourly
     @Scheduled(cron = "0 */1 * ? * *")
     public void closeVoting() throws InterruptedException {
-        for (Event event : eventRepository.findByMailSent(false)) {
-            if (event.getPoll().isPollOpen()) {
-                // TODO here we need to send the mail
-                 emailPollClosedService.sendPollClosedEmail(event);
-                // TODO once the mail is sent event.isMailSent has to be set to (true)
-                // TODO emails go out, however the logic is not correct !!!!!!! urgent review
-                System.out.println(Instant.now().toString());
-                System.out.println("Poll closed at: ");
-                System.out.println(event.getPoll().getPollCloseDate().toString());
+        for (Event event : eventRepository.findEventsByMailSentFalse()) {
+            if (!event.isPollOpen()) {
+                if (event.getPoll().getPollCloseDate().isBefore(Instant.now())){
+                    event.setPollOpen(false);
+                    eventRepository.save(event);
+                }
+                emailPollClosedService.sendPollClosedEmail(event);
                 event.setMailSent(true);
+                eventRepository.save(event);
             } else {
-                System.out.println("Poll is open, closes at:");
-                System.out.println(event.getPoll().getPollCloseDate().toString());
+                if (event.getPoll().getPollCloseDate().isBefore(Instant.now())){
+                    event.setPollOpen(false);
+                    eventRepository.save(event);
+                }
             }
         }
     }

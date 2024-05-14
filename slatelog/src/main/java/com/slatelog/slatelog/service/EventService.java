@@ -3,10 +3,13 @@ package com.slatelog.slatelog.service;
 import com.slatelog.slatelog.domain.address.Address;
 import com.slatelog.slatelog.domain.event.*;
 import com.slatelog.slatelog.domain.user.User;
+import com.slatelog.slatelog.email.EmailEventInvitationService;
 import com.slatelog.slatelog.persistance.EventRepository;
 import com.slatelog.slatelog.presentation.commands.Commands.CreateEventCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,14 +21,23 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class EventService {
 
+    private final EmailEventInvitationService emailEventInvitationService;
     private final EventRepository eventRepository;
 
 
     public void createEvent(User user, CreateEventCommand command){
 
         // Combine deadlineDate and deadlineTime into LocalDateTime
-        LocalDateTime eventDateTime = LocalDateTime.parse(command.deadlineDate() + "T" + command.deadlineTime());
-        Instant eventDeadLineVoting = eventDateTime.toInstant(ZoneOffset.UTC);
+        LocalDateTime eventDateTime = LocalDateTime.parse( command.deadlineDate() + "T" + command.deadlineTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+
+        // TODO !!!!!!!!!! TIMEZONE insant
+        ZoneId viennaZoneId = ZoneId.of("Europe/Vienna");
+
+        // Step 2: Convert LocalDateTime to ZonedDateTime in Vienna time zone
+        ZonedDateTime eventDateTimeInVienna = eventDateTime.atZone(viennaZoneId);
+
+        // Step 3: Convert ZonedDateTime to Instant
+        Instant eventDeadLineVoting = eventDateTimeInVienna.toInstant();
 
         // Create poll options
         HashMap<Instant, List<Answer>> pollOptions = new HashMap<>();
@@ -56,6 +68,10 @@ public class EventService {
 
         // Create the Event
         Event event = new Event(user.getId(), command.title(), command.description(), poll, location, invitations, null, hashTags);
+
+        // Send invitation Emails to invitees
+        invitations.forEach(invitation -> emailEventInvitationService.sendEventInvitationEmail(event, invitation));
+
         // Save Event
         saveEvent(event);
     }
@@ -75,10 +91,6 @@ public class EventService {
         if (event.getUserId().equals(user.getId()))
             return event;
         return null;
-    }
-
-    public List<Event> findAllEvents() {
-        return eventRepository.findAll();
     }
 
     public List<Event> findAllUserEvents(String userId){

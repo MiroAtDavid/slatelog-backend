@@ -26,7 +26,7 @@ public class Poll {
 
     private HashMap<Instant, List<Answer>> pollOptions;
 
-    private boolean pollOpen;
+    // private boolean pollOpen;
 
     private Instant pollCloseDate;
 
@@ -43,6 +43,5 @@ public class Poll {
     public Poll(HashMap<Instant, List<Answer>> pollOptions, Instant pollCloseDate) {
         this.pollOptions = isNotNull(pollOptions, "poll options");
         this.pollCloseDate = isNotNull(pollCloseDate, "poll close date");
-        this.pollOpen = pollCloseDate.isAfter(Instant.now());
     }
 }

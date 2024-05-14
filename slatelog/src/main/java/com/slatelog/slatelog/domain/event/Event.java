@@ -44,6 +44,7 @@ public class Event extends BaseEntity<String> {
     private Instant votingDeadLine;
     private byte[] icsFileData;
     private boolean mailSent = false;
+    private boolean pollOpen = true;
 
     /**
      * Default constructor for Spring Data.
@@ -81,7 +82,9 @@ public class Event extends BaseEntity<String> {
         this.invitations = invitations;
         this.icsFileData = createIcsFileData();
         this.mailSent = isMailSent();
+        this.pollOpen = isPollOpen();
     }
+
 
     private byte[] createIcsFileData() {
         // TODO this is just a test needs rethinking and refactoring
