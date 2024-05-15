@@ -24,4 +24,10 @@ public class EventController {
     public Event getEvent(@AuthenticationPrincipal SecurityUser principal, @PathVariable String eventId) {
         return eventService.getEventByIdAndUser(principal.getUser(), eventId);
     }
+
+    @DeleteMapping("/{eventId}")
+    public void deleteEvent(@AuthenticationPrincipal SecurityUser principal, @PathVariable String eventId) {
+        eventService.deleteEventByIdAndUser(principal.getUser(), eventId);
+    }
+
 }

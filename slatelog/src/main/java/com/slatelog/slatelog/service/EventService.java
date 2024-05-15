@@ -95,6 +95,13 @@ public class EventService {
         return eventRepository.findByUserId(userId);
     }
 
+    public void deleteEventByIdAndUser(User user, String eventId) {
+        // Logic to find the event by ID and user, and delete it
+        // For example:
+        Event event = eventRepository.findByIdAndUser(eventId, user.getId());
+        eventRepository.delete(event);
+    }
+
     // Helper Methods --------------------------------------------------------------------------------------------------
 
     // We are extracting HashTags from the event description

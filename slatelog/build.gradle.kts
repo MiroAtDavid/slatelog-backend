@@ -61,7 +61,7 @@ dependencies {
 	implementation("net.datafaker:datafaker:2.2.3-SNAPSHOT")
 
 	// oAuth2
-	// compileOnly("org.springframework.boot:spring-boot-starter-security")
+	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 	// compileOnly("org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.1.7.RELEASE")
 
 }
