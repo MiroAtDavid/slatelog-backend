@@ -24,6 +24,4 @@ public class EventController {
     public Event getEvent(@AuthenticationPrincipal SecurityUser principal, @PathVariable String eventId) {
         return eventService.getEventByIdAndUser(principal.getUser(), eventId);
     }
-
-
 }

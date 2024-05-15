@@ -9,12 +9,9 @@ import com.slatelog.slatelog.presentation.commands.Commands;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
-
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -123,14 +120,14 @@ public class PollService {
             icsContent.append("SUMMARY:" + event.getTitle() + "\n");
             icsContent.append("DESCRIPTION:" + event.getDescription() + "\n");
             icsContent.append("LOCATION:" + eventLocation + "\n");
-            // TODO PollService: creteInivteICSFileData(): this needs to be the user email instead of the userID
-            icsContent.append("ORGANIZER:" + event.getUserId() + "\n");
+            User creatorUser = userRepository.findUserById(event.getUserId());
+            String creatorEmail = creatorUser.getEmail();
+            icsContent.append("ORGANIZER:" + creatorEmail + "\n");
             for (String attendee : invitationEmails) {
                 icsContent.append("ATTENDEE:" + attendee + "\n");
             }
             icsContent.append("END:VEVENT\n");
         }
-        System.out.println(icsContent);
         byte[] ics = icsContent.toString().getBytes();
         return ics;
     }

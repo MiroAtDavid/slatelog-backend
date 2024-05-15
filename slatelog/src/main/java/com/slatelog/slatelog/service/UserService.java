@@ -14,7 +14,6 @@ import com.slatelog.slatelog.presentation.views.Views.LoginView;
 
 import java.util.List;
 
-
 @Service
 @RequiredArgsConstructor
 public class UserService {

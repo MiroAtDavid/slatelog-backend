@@ -8,11 +8,9 @@ import com.slatelog.slatelog.persistance.EventRepository;
 import com.slatelog.slatelog.presentation.commands.Commands.CreateEventCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import java.time.*;
 import java.util.*;
 import java.util.stream.Collectors;

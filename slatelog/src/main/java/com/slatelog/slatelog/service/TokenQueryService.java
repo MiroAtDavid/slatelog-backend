@@ -2,14 +2,9 @@ package com.slatelog.slatelog.service;
 
 import com.slatelog.slatelog.domain.event.Invitation;
 import com.slatelog.slatelog.persistance.EventRepository;
-import com.slatelog.slatelog.security.token.Token;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 import java.util.Objects;
-
-import static com.mongodb.internal.HexUtils.toHex;
 
 @Service
 @RequiredArgsConstructor
@@ -18,7 +13,6 @@ public class TokenQueryService {
     private final EventRepository eventRepository;
 
     public boolean checkForValidToken(String eventId, String token){
-        System.out.println("we are in the tokenQuery");
         for (Invitation invitation : Objects.requireNonNull(eventRepository.getEventById(eventId).getInvitations())) {
             assert invitation.getInvitationToken() != null;
             String invitationToken = invitation.getInvitationToken().getEncodedValue().toString().trim();
@@ -52,5 +46,4 @@ public class TokenQueryService {
         }
         return null;
     }
-
 }
