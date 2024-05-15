@@ -30,39 +30,52 @@ public class PollService {
     }
 
     public void updateEventVoting(String eventId, String emailToken, Commands.UpdateEventVoting command) {
-        // Make sure event is there
+        // Fetch the event
         Event event = eventRepository.getEventById(eventId);
-        // Assert there is an associated invitee email with the secToken and retrieve it
+        if (event == null) {
+            throw new IllegalArgumentException("Event not found for ID: " + eventId);
+        }
+        // Validate voter email
         String voterEmail = tokenQueryService.checkForValidVoterEmail(eventId, emailToken);
-        // Let's get the votes from the command DTO
+        if (voterEmail == null) {
+            throw new IllegalArgumentException("Invalid email token: " + emailToken);
+        }
+        // Get votes from the command DTO
         List<HashMap<Instant, String>> votes = command.votes();
-        // Create a list which will contain the positive votes for the ics file
         List<Instant> positiveVotes = new ArrayList<>();
         VoteOption yes = VoteOption.Yes;
 
-        // Bloody magic adds answers to a simple poll
-        for (Instant instant : event.getPoll().getPollOptions().keySet()) {
-            for (HashMap<Instant, String> map : votes){
+        // Process votes and update poll
+        Poll poll = event.getPoll();
+        for (Instant instant : poll.getPollOptions().keySet()) {
+            for (HashMap<Instant, String> map : votes) {
                 if (map.containsKey(instant)) {
                     Answer vote = new Answer(voterEmail, Instant.now(), VoteOption.valueOf(map.get(instant)));
-                    // If vote is positive let's get this done
-                    if (vote.getVoteOption().equals(yes))
+                    if (vote.getVoteOption().equals(yes)) {
                         positiveVotes.add(instant);
-                    // Continue on with service logic
-                    Poll poll = event.getPoll();
+                    }
                     poll.getPollOptions().get(instant).removeIf(v -> v.getVoterEmail().equals(voterEmail));
                     poll.getPollOptions().get(instant).add(vote);
                 }
             }
         }
-        // Create ics file for voter and send mail
+        // Create and set ICS file data for the invitation
         Invitation invitation = tokenQueryService.checkForInvitation(eventId, emailToken);
+        if (invitation == null) {
+            throw new IllegalArgumentException("No invitation found for eventId: " + eventId + " and emailToken: " + emailToken);
+        }
         invitation.setIcsFileDataInvitee(createInviteeIcsFileData(event, positiveVotes));
-        // TODO invitee file is not being created yet
-        // Finally save event with updated poll
-        eventRepository.save(event);
 
+        // Update invitations and save event
+        Set<Invitation> invitations = event.getInvitations();
+        invitations.removeIf(inv -> inv.getEmail().equals(invitation.getEmail())); // Remove old invitation
+        invitations.add(invitation); // Add updated invitation
+        event.setInvitations(invitations); // Ensure the list is set back to the event
+
+        // Save the event
+        eventRepository.save(event);
     }
+
 
     // Helper to create the ics file data for the invitee
     private byte[] createInviteeIcsFileData(Event event, List<Instant> eventTimes) {
@@ -110,12 +123,14 @@ public class PollService {
             icsContent.append("SUMMARY:" + event.getTitle() + "\n");
             icsContent.append("DESCRIPTION:" + event.getDescription() + "\n");
             icsContent.append("LOCATION:" + eventLocation + "\n");
+            // TODO PollService: creteInivteICSFileData(): this needs to be the user email instead of the userID
             icsContent.append("ORGANIZER:" + event.getUserId() + "\n");
             for (String attendee : invitationEmails) {
                 icsContent.append("ATTENDEE:" + attendee + "\n");
             }
             icsContent.append("END:VEVENT\n");
         }
+        System.out.println(icsContent);
         byte[] ics = icsContent.toString().getBytes();
         return ics;
     }

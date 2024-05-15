@@ -23,7 +23,7 @@ public class Invitation {
     private @Nullable Token invitationToken;
     // Event invitation voting end date
     private @Nullable Instant tokenExpirationDate;
-    // TODO !!! We need to get ics file data from the poll for the invitation
+    // ics File data for the invitee
     private byte[] icsFileDataInvitee;
 
     // Constructor to create an Invitation with an email and token
@@ -31,15 +31,16 @@ public class Invitation {
         this.email = isNotNull(email, "email");
         this.tokenExpirationDate = tokenExpirationDate;
         generateInvitationToken(email, tokenExpirationDate);
-        this.icsFileDataInvitee = generateIcsVotedFile();
+        setIcsFileDataInvitee(icsFileDataInvitee);
     }
 
     // Default constructor (
     protected Invitation(){}
 
+
     // Generating secToken for the invitations
     private void generateInvitationToken(String email, Instant tokenExpirationDate) {
-        if (tokenExpirationDate == null || tokenExpirationDate.isBefore(Instant.now())) {
+        if (tokenExpirationDate == null) {
             invitationToken = null;
         } else {
             Duration durationUntilExpiration = Duration.between(Instant.now(), tokenExpirationDate);
@@ -50,10 +51,12 @@ public class Invitation {
         }
     }
 
+    // TODO, the event tests contain the code for generating files
     public byte[] generateIcsVotedFile(){
         return new byte[]{};
     }
 
+    // We need a custom equals method
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -62,6 +65,7 @@ public class Invitation {
         return Objects.equals(email, invitation.email );
     }
 
+    // Custom mehtod
     public int hashCode() {
         return Objects.hash(email);
     }

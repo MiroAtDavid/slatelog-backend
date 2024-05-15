@@ -87,14 +87,8 @@ public class Event extends BaseEntity<String> {
 
 
     private byte[] createIcsFileData() {
-        // TODO this is just a test needs rethinking and refactoring
-        //  we need to retrieve the invitation email on voting
-        //  this needs however to be done with the security token
-        //  therefor we need a REST mapping for the secToken Link
-        //  however this is a bread crumb on how to retrieve deep data
-        //  however we are just calling it here so it gets executed on run
+
         testCheckForInvitationEmailOnVoting();
-        // TODO /end
 
         Set<Instant> eventDates = getPoll().getPollOptions().keySet();
         List<Instant> instantList = new ArrayList<>();
