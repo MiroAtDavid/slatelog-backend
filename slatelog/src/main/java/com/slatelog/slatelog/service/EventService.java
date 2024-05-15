@@ -5,6 +5,7 @@ import com.slatelog.slatelog.domain.event.*;
 import com.slatelog.slatelog.domain.user.User;
 import com.slatelog.slatelog.email.EmailEventInvitationService;
 import com.slatelog.slatelog.persistance.EventRepository;
+import com.slatelog.slatelog.presentation.commands.Commands;
 import com.slatelog.slatelog.presentation.commands.Commands.CreateEventCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -98,9 +99,66 @@ public class EventService {
     public void deleteEventByIdAndUser(User user, String eventId) {
         // Logic to find the event by ID and user, and delete it
         // For example:
-        Event event = eventRepository.findByIdAndUser(eventId, user.getId());
+        Event event = eventRepository.findByIdAndUserId(eventId, user.getId());
         eventRepository.delete(event);
     }
+
+    public void updateEvent(User user, String eventId, Commands.UpdateEventCommand command) {
+        // Logic to find the event by ID and user, and update it
+        Event event = eventRepository.findByIdAndUserId(eventId, user.getId());
+            // Combine deadlineDate and deadlineTime into LocalDateTime
+            LocalDateTime eventDateTime = LocalDateTime.parse( command.deadlineDate() + "T" + command.deadlineTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+
+            // TODO !!!!!!!!!! TIMEZONE insant
+            ZoneId viennaZoneId = ZoneId.of("Europe/Vienna");
+
+            // Step 2: Convert LocalDateTime to ZonedDateTime in Vienna time zone
+            ZonedDateTime eventDateTimeInVienna = eventDateTime.atZone(viennaZoneId);
+
+            // Step 3: Convert ZonedDateTime to Instant
+            Instant eventDeadLineVoting = eventDateTimeInVienna.toInstant();
+
+            // Create poll options
+            HashMap<Instant, List<Answer>> pollOptions = new HashMap<>();
+            for (String dateTime : command.pollOptions()) {
+                // Parse each string to Instant
+                Instant instant = Instant.parse(dateTime);
+                // Associate an empty list of Answers with the Instant key
+                pollOptions.put(instant, new ArrayList<>());
+            }
+            // Create the Poll object
+            Poll poll = new Poll(pollOptions, eventDeadLineVoting);
+
+            // Create Address object
+            Address location = new Address(command.locationStreet(), command.locationCity(), command.locationState(), command.locationZipCode());
+
+            // Create Invitation object
+            Set<Invitation> invitations = command.invitationEmails().stream()
+                    .map(email -> new Invitation(email, eventDeadLineVoting))
+                    .collect(Collectors.toSet());
+
+            // HashTag logic
+            List<String> extractedHashtags = extractHashtags(command.description());
+            Set<HashTag> hashTags = new HashSet<>(Set.of());
+            // Output the extracted hashtags
+            for (String hashtag : extractedHashtags) {
+                hashTags.add(new HashTag(hashtag));
+            }
+            event.setTitle(command.title());
+            event.setDescription(command.description());
+            event.setPoll(poll);
+            event.setLocation(location);
+            event.setInvitations(invitations);
+            event.setMedias(null);
+            event.setHashTags(hashTags);
+
+            // Send invitation Emails to invitees
+            invitations.forEach(invitation -> emailEventInvitationService.sendEventInvitationEmail(event, invitation));
+
+            // Save Event
+            saveEvent(event);
+    }
+
 
     // Helper Methods --------------------------------------------------------------------------------------------------
 

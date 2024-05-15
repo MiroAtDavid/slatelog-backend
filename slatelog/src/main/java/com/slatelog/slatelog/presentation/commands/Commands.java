@@ -1,9 +1,6 @@
 package com.slatelog.slatelog.presentation.commands;
 
-import com.slatelog.slatelog.domain.event.Answer;
-
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -41,7 +38,22 @@ public class Commands {
     // Get the votes on a poll
     public record UpdateEventVoting (
             List<HashMap<Instant, String>> votes
-    ){
+    ){}
 
+    public record UpdateEventCommand (
+            String title,
+            String description,
+            List<String> pollOptions,
+            String locationStreet,
+            String locationCity,
+            String locationState,
+            String locationZipCode,
+            String deadlineDate,    // TODO
+            String deadlineTime,    // TODO
+            Set<String> likes,
+            Set<String> hashTags,
+            List<String> invitationEmails
+    ){}
+        // Getters and setters
     }
-}
+
