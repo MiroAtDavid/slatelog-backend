@@ -88,23 +88,50 @@ package com.slatelog.slatelog.security.web;
 // 3. Security Config
 //    Configure SecurityFilterChain
 
+import com.slatelog.slatelog.domain.user.CustomOAuth2User;
 import com.slatelog.slatelog.domain.user.Role;
 import com.slatelog.slatelog.persistance.UserRepository;
+import com.slatelog.slatelog.presentation.views.Views;
+import com.slatelog.slatelog.service.CustomOAuth2UserService;
+import com.slatelog.slatelog.service.UserService;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.WebAttributes;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.io.IOException;
+import java.util.Map;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 
 @Configuration
 public class WebSecurityConfig implements WebMvcConfigurer {
 
+    private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private CustomOAuth2UserService oAuth2UserService;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -123,18 +150,49 @@ public class WebSecurityConfig implements WebMvcConfigurer {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // AUTHENTICATION
-        http.httpBasic(Customizer.withDefaults());
+        http.httpBasic(withDefaults());
         http.formLogin(formLogin -> formLogin.disable());
 
         // AUTHORIZATION
         http.authorizeHttpRequests(
-                (authorize) ->
-                        authorize
-                                .requestMatchers("/api/registration/**").permitAll()
-                                .requestMatchers("/api/user/**").hasRole(Role.USER.toString())
-                                .requestMatchers("/api/event/poll").permitAll()
-                                .anyRequest()
-                                .authenticated());
+                        (authorize) ->
+                                authorize
+                                        .requestMatchers("/api/registration/**", "/api/login/**", "/api/oauth/**", "/oauth/**").permitAll()
+                                        .requestMatchers("/api/user/**").hasRole(Role.USER.toString())
+                                        .requestMatchers("/api/event/poll").permitAll()
+                                        .anyRequest().authenticated()
+
+        );
+
+        // OAuth2 Login
+        http.oauth2Login(oauth2Login ->
+                oauth2Login
+                        .loginPage("/api/user")
+                        .userInfoEndpoint(userInfoEndpoint ->
+                                userInfoEndpoint.userService(oAuth2UserService)
+                        )
+                        .successHandler(new AuthenticationSuccessHandler() {
+                            @Override
+                            public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException, IOException {
+                                OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
+                                CustomOAuth2User customOAuth2User = new CustomOAuth2User(oauth2User);
+                                Views.LoginView loginView = userService.processOAuthPostLogin(customOAuth2User.getAttributes().get("email").toString());
+
+                                clearAuthenticationAttributes(request);
+
+                                response.sendRedirect("http://localhost:4200/api/timeline");
+                            }
+
+                            protected void clearAuthenticationAttributes(HttpServletRequest request) {
+                                var session = request.getSession(false);
+                                if (session == null) {
+                                    return;
+                                }
+                                session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+                            }
+                        })
+        );
+
 
         // CSRF
         http.csrf(csrf -> csrf.disable());
@@ -149,4 +207,7 @@ public class WebSecurityConfig implements WebMvcConfigurer {
         DefaultSecurityFilterChain filterChain = http.build();
         return filterChain;
     }
+
+
+
 }

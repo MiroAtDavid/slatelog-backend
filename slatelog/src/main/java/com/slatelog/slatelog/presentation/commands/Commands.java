@@ -1,11 +1,16 @@
 package com.slatelog.slatelog.presentation.commands;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+@RequiredArgsConstructor
 public class Commands {
+
 
     // --- Registration ---
     //  whiten input = email.trim().toLowerCase();

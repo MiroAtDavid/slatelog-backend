@@ -26,6 +26,7 @@ public class Invitation {
     // ics File data for the invitee
     private byte[] icsFileDataInvitee;
 
+
     // Constructor to create an Invitation with an email and token
     public Invitation(String email, @Nullable Instant tokenExpirationDate) {
         this.email = isNotNull(email, "email");

@@ -131,7 +131,7 @@ public class PasswordService {
 
         // Private constructors are only accessible from within the class and the <<Outer Class>>.
         // So only `PasswordService` can create `EncodedPassword` objects.
-        private EncodedPassword(String hashedValue) {
+        public EncodedPassword(String hashedValue) {
             this.encodedPassword = hashedValue;
         }
     }

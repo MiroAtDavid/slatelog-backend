@@ -134,7 +134,7 @@ public class PollService {
 
     // TODO setting up event closed notification
     // the event needs a boolean value isNotified
-    // check out @CompundIndex first value should  be isNotified second index isClosed
+    // check out @CompoundIndex first value should  be isNotified second index isClosed
     // "0 0 * ? * *" = hourly
     @Scheduled(cron = "0 */1 * ? * *")
     public void closeVoting() throws InterruptedException {
@@ -155,4 +155,14 @@ public class PollService {
             }
         }
     }
+
+   // @Scheduled(cron = "0 */1 * ? * *")
+   // public void closeVoting3() throws InterruptedException {
+   //     eventRepository.findByPollPollCloseDateAfterAndMailSent(Instant.now(), false)
+   //             .forEach(event -> {
+   //                     emailPollClosedService.sendPollClosedEmail(event);
+   //                     event.setMailSent(true);
+   //                     eventRepository.save(event);
+   //             });
+   // }
 }

@@ -93,10 +93,10 @@ public class Event extends BaseEntity<String> {
 
         LocalDateTime eventCreatedAt = LocalDateTime.now();
         LocalDateTime eventEndTime = eventCreatedAt.plusHours(1);
-        String eventLocationState = getLocation().state().toString();
-        String eventLocationCity = getLocation().city().toString();
-        String eventLocationZip = getLocation().zipCode().toString();
-        String eventLocationStreet = getLocation().street() .toString();
+        String eventLocationState = getLocation().state();
+        String eventLocationCity = getLocation().city();
+        String eventLocationZip = getLocation().zipCode();
+        String eventLocationStreet = getLocation().street();
         String eventLocation = eventLocationState + ", " + eventLocationCity + " " + eventLocationZip + ", " + eventLocationStreet;
 
         String [] invitationEmails = getInvitations().stream()

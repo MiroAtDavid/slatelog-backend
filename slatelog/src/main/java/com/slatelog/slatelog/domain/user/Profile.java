@@ -3,8 +3,10 @@ package com.slatelog.slatelog.domain.user;
 import com.slatelog.slatelog.domain.address.Address;
 import jakarta.annotation.Nullable;
 import lombok.Getter;
+import lombok.Setter;
 
 import static com.slatelog.slatelog.foundation.AssertUtil.hasMaxText;
+import static com.slatelog.slatelog.foundation.AssertUtil.hasMaxTextOrNull;
 
 /**
  * Profile of a user.
@@ -13,16 +15,17 @@ import static com.slatelog.slatelog.foundation.AssertUtil.hasMaxText;
  */
 
 // This class in inlined in User.
+@Setter
 @Getter
 public class Profile {
-    private String firstName;
+    private @Nullable String firstName;
     private String lastName;
     private @Nullable Address address;
 
     // private Media avatar;
 
-    public Profile(String firstName, String lastName /*Media avatar*/) {
-        this.firstName = hasMaxText(firstName, 255, "firstName");
+    public Profile(@Nullable String firstName, String lastName /*Media avatar*/) {
+        this.firstName = hasMaxTextOrNull(firstName, 255, "firstName");
         this.lastName = hasMaxText(lastName, 255, "lastName");
         this.address =  address;
 
