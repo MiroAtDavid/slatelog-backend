@@ -43,25 +43,27 @@ public class UserService {
         return loginView;
     }
 
-    public LoginView processOAuthPostLogin(String username) {
-        Optional<User> existUser = userRepository.findByEmail(username);
-        if (existUser.isEmpty()) {
+    public LoginView processOAuthPostLogin(String email) {
+        Optional<User> existingOauth2User = userRepository.findByEmail(email);
+        if (existingOauth2User.isEmpty()) {
 
             // Register OAuth2User
-            User newUser = oAuth2RegistrationService.oauth2Register(username);
+            User newUser = oAuth2RegistrationService.oauth2Register(email);
+            LOGGER.debug("UserService: processOAuthPostLogin - OAuth2User registered successfully {}", newUser);
 
             // Fetch all associated data for that user from repositories (e.g. posts, messengers, etc.).
             List<Event> events = eventRepository.findByUserId(newUser.getId());
             // List<Messenger> messenger = messengerRepository.findByParticipantId(user.getId());
 
             LoginView loginView = mapper.toLoginView(newUser, events);
-            LOGGER.debug("OAuth2User login successful {}", loginView);
+            LOGGER.debug("UserService: processOAuthPostLogin - OAuth2User login successful {}", loginView);
             return loginView;
         }
-        User userExist = existUser.get();
-        List<Event> events = eventRepository.findByUserId(userExist.getId());
-        LoginView loginViewNew = mapper.toLoginView(userExist, events );
-        LOGGER.debug("Existing OAuth2User login successfully {}", loginViewNew);
+        User oauth2user = existingOauth2User.get();
+        LOGGER.debug("UserService: processOAuthPostLogin - OAuth2User login successful {}", oauth2user);
+        List<Event> events = eventRepository.findByUserId(oauth2user.getId());
+        LoginView loginViewNew = mapper.toLoginView(oauth2user, events );
+        LOGGER.debug("UserService: processOAuthPostLogin - OAuth2User successful LoginView {}", loginViewNew);
 
         return loginViewNew;
     }

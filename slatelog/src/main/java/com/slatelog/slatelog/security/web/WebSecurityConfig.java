@@ -97,6 +97,7 @@ import com.slatelog.slatelog.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -104,6 +105,8 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -113,8 +116,12 @@ import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import java.io.IOException;
 import java.util.Map;
@@ -134,10 +141,24 @@ public class WebSecurityConfig implements WebMvcConfigurer {
     private CustomOAuth2UserService oAuth2UserService;
 
     @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/**")
+                .addResourceLocations("classpath:/static/");
+    }
+
+    @Bean
+    public InternalResourceViewResolver viewResolver() {
+        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+        resolver.setPrefix("/WEB-INF/views/");
+        resolver.setSuffix(".html");
+        return resolver;
+    }
+
+    @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("http://localhost:4200")
-                .allowedMethods("GET", "POST", "PUT", "DELETE")
+        registry.addMapping("/api/**")
+                .allowedOrigins("http://localhost:4200", "http://localhost:8080")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);
     }
@@ -157,57 +178,68 @@ public class WebSecurityConfig implements WebMvcConfigurer {
         http.authorizeHttpRequests(
                         (authorize) ->
                                 authorize
-                                        .requestMatchers("/api/registration/**", "/api/login/**", "/api/oauth/**", "/oauth/**").permitAll()
-                                        .requestMatchers("/api/user/**").hasRole(Role.USER.toString())
+                                        .requestMatchers("/api/registration/**", "/api/login/**", "/login", "/oauth2/**").permitAll()
+                                        .requestMatchers("/api/user/**").authenticated()
                                         .requestMatchers("/api/event/poll").permitAll()
                                         .anyRequest().authenticated()
 
-        );
-
-        // OAuth2 Login
-        http.oauth2Login(oauth2Login ->
+        )
+            .oauth2Login(oauth2Login ->
                 oauth2Login
                         .loginPage("/api/user")
                         .userInfoEndpoint(userInfoEndpoint ->
                                 userInfoEndpoint.userService(oAuth2UserService)
                         )
-                        .successHandler(new AuthenticationSuccessHandler() {
-                            @Override
-                            public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException, IOException {
-                                OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
-                                CustomOAuth2User customOAuth2User = new CustomOAuth2User(oauth2User);
-                                Views.LoginView loginView = userService.processOAuthPostLogin(customOAuth2User.getAttributes().get("email").toString());
-
-                                clearAuthenticationAttributes(request);
-
-                                response.sendRedirect("http://localhost:4200/api/timeline");
-                            }
-
-                            protected void clearAuthenticationAttributes(HttpServletRequest request) {
-                                var session = request.getSession(false);
-                                if (session == null) {
-                                    return;
-                                }
-                                session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
-                            }
-                        })
+                       .successHandler(authenticationSuccessHandler())
         );
+
+
+
 
 
         // CSRF
         http.csrf(csrf -> csrf.disable());
 
         // CORS
-        http.cors(cors -> cors.disable());
+        //http.cors(cors -> cors.disable());
 
         // SESSIONS
         http.sessionManagement(
-                session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED));
 
         DefaultSecurityFilterChain filterChain = http.build();
         return filterChain;
     }
 
+    @Bean
+    public AuthenticationSuccessHandler authenticationSuccessHandler() {
+        return new AuthenticationSuccessHandler() {
+            @Override
+            public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+                //OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
+                //CustomOAuth2User customOAuth2User = new CustomOAuth2User(oauth2User);
+                // Optionally process post login
+                // Views.LoginView loginView = userService.processOAuthPostLogin(customOAuth2User.getAttributes().get("email").toString());
 
+                // Ensure authentication is stored in the session
+                SecurityContext securityContext = SecurityContextHolder.getContext();
+                securityContext.setAuthentication(authentication);
+                HttpSession session = request.getSession(true);
+                session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, securityContext);
 
+                //clearAuthenticationAttributes(request);
+                SimpleUrlAuthenticationSuccessHandler successHandler = new SimpleUrlAuthenticationSuccessHandler();
+                // Redirect to the frontend URL
+                successHandler.setDefaultTargetUrl("http://localhost:4200/api/timeline");
+                //response.sendRedirect("http://localhost:4200/timeline");
+            }
+
+            private void clearAuthenticationAttributes(HttpServletRequest request) {
+                HttpSession session = request.getSession(false);
+                if (session != null) {
+                    session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+                }
+            }
+        };
+    }
 }

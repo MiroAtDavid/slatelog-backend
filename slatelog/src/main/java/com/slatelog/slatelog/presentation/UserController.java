@@ -2,6 +2,7 @@ package com.slatelog.slatelog.presentation;
 
 import com.slatelog.slatelog.domain.user.Profile;
 import com.slatelog.slatelog.domain.user.User;
+import com.slatelog.slatelog.persistance.UserRepository;
 import com.slatelog.slatelog.presentation.views.Views;
 import com.slatelog.slatelog.security.web.SecurityUser;
 import com.slatelog.slatelog.service.UserService;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
 
 
 @RestController
@@ -27,15 +29,20 @@ public class UserController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(UserRegistrationController.class);
     private final UserService userService;
+    private final UserRepository userRepository;
 
     @GetMapping
     public Views.LoginView login(@AuthenticationPrincipal Object principal) {
-        LOGGER.debug("UserController#login {}", principal);
-
         if (principal instanceof SecurityUser securityUser) {
+            LOGGER.debug("UserController#login {}", principal);
             return userService.login(securityUser.getUser());
         } else if (principal instanceof OAuth2User oauth2User) {
-            return userService.processOAuthPostLogin(oauth2User.getName());
+            //Views.LoginView l = userService.processOAuthPostLogin(oauth2User.getAttribute("email"));
+            //Optional<User> user = userRepository.findById(l.user().id());
+            Optional<User> u = userRepository.findByEmail(oauth2User.getAttribute("email"));
+            //SecurityUser s = new SecurityUser(u.get());
+            LOGGER.debug("UserController#login {}", u);
+            return userService.processOAuthPostLogin(oauth2User.getAttribute("email"));
         } else {
             throw new IllegalArgumentException("Unknown principal type");
         }
