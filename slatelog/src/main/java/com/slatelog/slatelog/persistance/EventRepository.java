@@ -24,6 +24,7 @@ public interface EventRepository extends MongoRepository<Event, String>, CustomE
 
     Event findByIdAndUserId(String eventId, String userId);
 
+
     List<Event> findByPollPollCloseDateAfterAndMailSent(Instant date, boolean hasEmailSent);
 }
 

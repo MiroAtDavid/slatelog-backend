@@ -18,24 +18,27 @@ public class EventController {
     private final EventService eventService;
 
     @PostMapping
-    public void createEvent(@AuthenticationPrincipal SecurityUser principal, @RequestBody CreateEventCommand command) {
+    public void createEvent(@AuthenticationPrincipal SecurityUser principal,
+                            @RequestBody CreateEventCommand command) {
         eventService.createEvent(principal.getUser(), command);
     }
 
     @GetMapping("/{eventId}")
-    public Event getEvent(@AuthenticationPrincipal SecurityUser principal, @PathVariable String eventId) {
+    public Event getEvent(@AuthenticationPrincipal SecurityUser principal,
+                          @PathVariable String eventId) {
         return eventService.getEventByIdAndUser(principal.getUser(), eventId);
     }
 
     @DeleteMapping("/{eventId}")
-    public void deleteEvent(@AuthenticationPrincipal SecurityUser principal, @PathVariable String eventId) {
+    public void deleteEvent(@AuthenticationPrincipal SecurityUser principal,
+                            @PathVariable String eventId) {
         eventService.deleteEventByIdAndUser(principal.getUser(), eventId);
     }
 
     @PutMapping("/{eventId}")
-    public void updateEvent(@AuthenticationPrincipal SecurityUser principal, @PathVariable String eventId, @RequestBody UpdateEventCommand command) {
+    public void updateEvent(@AuthenticationPrincipal SecurityUser principal,
+                            @PathVariable String eventId,
+                            @RequestBody UpdateEventCommand command) {
         eventService.updateEvent(principal.getUser(), eventId, command);
     }
-
-
 }

@@ -22,7 +22,12 @@ public class EmailEventInvitationService {
     @Value("http")
     private String protocol;
 
+
+    // POP3-Server:
+    // SMTP-Server:
+    // Benutzername:
     // Domain name of the server where the application is running
+
     @Value("localhost")
     private String domain;
 

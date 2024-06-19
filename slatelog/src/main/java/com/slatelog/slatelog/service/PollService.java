@@ -132,7 +132,7 @@ public class PollService {
         return ics;
     }
 
-    // TODO setting up event closed notification
+
     // the event needs a boolean value isNotified
     // check out @CompoundIndex first value should  be isNotified second index isClosed
     // "0 0 * ? * *" = hourly

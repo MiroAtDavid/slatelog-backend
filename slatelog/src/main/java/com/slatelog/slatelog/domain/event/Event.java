@@ -64,13 +64,15 @@ public class Event extends BaseEntity<String> {
      * @param invitations  Invitations for the Event.
      * @param medias      Optional media associated with the Event.
      */
-    public Event (String userId, String title, @Nullable String description, Poll poll, @Nullable Address location, @Nullable Set<Invitation> invitations, @Nullable List<Media> medias, @Nullable Set<HashTag> hashTags) {
+    public Event (String userId, String title, @Nullable String description, Poll poll,
+                  @Nullable Address location, @Nullable Set<Invitation> invitations,
+                  @Nullable List<Media> medias, @Nullable Set<HashTag> hashTags) {
         super(generateUUIDv4());
 
         isTrue(title != null || medias != null, "text or medias must not be null");
         this.userId = isNotNull(userId, "userId");
         this.title = isNotNull(title, "title");
-        this.description = hasMaxTextOrNull(description, 4096, "desctiption");
+        this.description = hasMaxTextOrNull(description, 4096, "description");
         this.poll = isNotNull(poll, "poll");
         this.location = location;
         this.medias = hasMaxSizeOrNull(medias, 10, "medias");

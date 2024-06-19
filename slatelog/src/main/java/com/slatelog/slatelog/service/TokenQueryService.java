@@ -13,7 +13,8 @@ public class TokenQueryService {
     private final EventRepository eventRepository;
 
     public boolean checkForValidToken(String eventId, String token){
-        for (Invitation invitation : Objects.requireNonNull(eventRepository.getEventById(eventId).getInvitations())) {
+        for (Invitation invitation : Objects.requireNonNull(
+                eventRepository.getEventById(eventId).getInvitations())) {
             assert invitation.getInvitationToken() != null;
             String invitationToken = invitation.getInvitationToken().getEncodedValue().toString().trim();
             String inputToken = token.trim().replace(" ", "+");
@@ -24,7 +25,8 @@ public class TokenQueryService {
     }
 
     public String checkForValidVoterEmail(String eventId, String token){
-        for (Invitation invitation : Objects.requireNonNull(eventRepository.getEventById(eventId).getInvitations())) {
+        for (Invitation invitation : Objects.requireNonNull(
+                eventRepository.getEventById(eventId).getInvitations())) {
             assert invitation.getInvitationToken() != null;
             String invitationToken = invitation.getInvitationToken().getEncodedValue();
             String inputToken = token.replace(" ", "+");
@@ -36,7 +38,8 @@ public class TokenQueryService {
     }
 
     public Invitation checkForInvitation(String eventId, String token){
-        for (Invitation invitation : Objects.requireNonNull(eventRepository.getEventById(eventId).getInvitations())) {
+        for (Invitation invitation : Objects.requireNonNull(
+                eventRepository.getEventById(eventId).getInvitations())) {
             assert invitation.getInvitationToken() != null;
             String invitationToken = invitation.getInvitationToken().getEncodedValue();
             String inputToken = token.replace(" ", "+");
